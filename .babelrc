@@ -1,0 +1,19 @@
+{
+  "plugins": ["@babel/syntax-dynamic-import", "@babel/plugin-syntax-jsx", 
+  [
+    "@babel/plugin-transform-react-jsx",
+    {
+      "throwIfNamespace": false, // defaults to true
+      "runtime": "classic" // defaults to classic
+    }
+  ]
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false
+      }
+    ]
+  ]
+}
