@@ -43,32 +43,30 @@ export const reconcileTests = [
   //     </i>
   //   )
   // },
-  {
-    from: (
-      <TestClassComponent>
-        <div>
-          Test<b>Test</b>
-        </div>
-      </TestClassComponent>
-    ),
-    to: (
-      <TestClassComponent title="heyy">
-        <div>
-          Test 2<b>Test</b>
-        </div>
-      </TestClassComponent>
-    )
+  // {
+  //   from: (
+  //     <TestClassComponent>
+  //       <div>
+  //         Test<b>Test</b>
+  //       </div>
+  //     </TestClassComponent>
+  //   ),
+  //   to: (
+  //     <TestClassComponent title="heyy">
+  //       <div>
+  //         Test 2<b>Test</b>
+  //       </div>
+  //     </TestClassComponent>
+  //   )
+  // },
+  { 
+    from: <div onClick={() => console.log('here')} hell="no">Test</div>,
+    to: <div>Test</div>,
   }
 ];
 
 export const reconcileTestCallback = (test, index) => {
-  // const p = document.createElement("p");
-  // p.style.fontSize = `12px`;
-  // p.style.fontWeight = 400;
-
   const curElement = render(test.from, reconcileRoot);
 
   reconcile(test.to, curElement, reconcileRoot);
-
-  // reconcileRoot.appendChild(p);
 };

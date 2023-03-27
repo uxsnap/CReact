@@ -77,11 +77,10 @@ export const render = (vdom, parent) => {
     // We will be rendering components here in the future
     if (typeof vdom.type === "function")
       return innerMount(renderComponent(vdom, parent));
-
-    const dom = document.createElement(vdom.type);
-
+      
+      const dom = document.createElement(vdom.type);
+      
     for (let prop in vdom.props) setProp(dom, prop, vdom.props[prop]);
-    // console.log(vdom);
     for (let child of vdom.children.flat()) render(child, dom);
 
     return innerMount(dom);
@@ -99,14 +98,27 @@ export const render = (vdom, parent) => {
  * We start with the simple things and then add keys, refs, and other stuff
  */
 export const setProp = (dom, key, value) => {
-  switch (key) {
-    case "style":
-      Object.assign(dom.style, value);
-      break;
-    case "string":
-      dom[key] = value;
-      break;
-    default:
-      return;
+  if (key === "style") {
+    return Object.assign(dom.style, value);
+  } 
+  if (key.startsWith('on')) {
+    return setEventListener(dom, key, value);
   }
+  
+  return dom.setAttribute(key, value);
+};
+
+/**
+ *
+ * @param {DomNode} dom
+ * @param {string} key
+ * @param {any} value
+ * Helper function to set event listener
+ */
+const setEventListener = (dom, key, value) => {
+  const event = key.slice(2,).toLowerCase();
+
+  dom.__eventHandlers = dom.__eventHandlers || {};
+  dom.__eventHandlers[event] = value;
+  dom.addEventListener(event, dom.__eventHandlers[event]);
 };

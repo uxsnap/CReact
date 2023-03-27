@@ -1,6 +1,6 @@
 # The list of things that need to be made
 
-- [ ] Implement events handling
+- [X] Implement events handling
 - [ ] Implement keys handling
 - [ ] Test the final version of the code
 - [ ] **Write enough tests to be sure that everything works perfectly**

@@ -78,23 +78,20 @@ export const reconcile = (vdom, dom, parent) => {
 
       const curChildNodes = [];
 
-      Array.from(dom.childNodes)
-        .flat()
-        .forEach((child, ind) => {
-          curChildNodes[ind] = child;
-        });
+      Array.from(dom.childNodes).flat().forEach((child, ind) => {
+        curChildNodes[ind] = child;
+      });
 
-      for (const attr of dom.attributes) {
-        dom.removeAttribute(attr);
+      for (const attr of dom.getAttributeNames()) dom.removeAttribute(attr);
+      for (const event in dom.__eventHandlers || {}) {
+        dom.removeEventListener(event, dom.__eventHandlers[event]);
+        dom.__eventHandlers[event] = null;
       }
-      for (const prop in newProps) {
-        setProp(dom, prop, newProps[prop]);
-      }
+      for (const prop in newProps) setProp(dom, prop, newProps[prop]);
 
       vdom.children.flat().forEach((child, ind) => {
         if (curChildNodes[ind]) {
           reconcile(child, curChildNodes[ind], dom);
-          // dom.childNodes[ind] = childNode;
         } else {
           dom.appendChild(render(child, dom));
         }
