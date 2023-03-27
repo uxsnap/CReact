@@ -50,7 +50,10 @@ export const renderTests = [
   // </ul>,
   // <TestComponent>Damn</TestComponent>,
   // <TestClassComponent>Test class component</TestClassComponent>,
-  <div onClick={() => console.log('here')}>Test</div>
+  // <div onClick={() => console.log('here')}>Test</div>,
+  <div key="key">Test</div>,
+  <TestComponent key="key">Damn</TestComponent>,
+  <TestClassComponent key="key">Test class component</TestClassComponent>,
 ];
 
 export const renderTestCallback = (test, index) => {

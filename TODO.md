@@ -1,7 +1,9 @@
 # The list of things that need to be made
 
 - [X] Implement events handling
-- [ ] Implement keys handling
+- [X] Implement keys handling
+- [ ] Refactor tests code to be more readable
+- [ ] Add render outline to figure out when the component has rerendered
 - [ ] Test the final version of the code
 - [ ] **Write enough tests to be sure that everything works perfectly**
 - [ ] Implement class component life-cycle methods

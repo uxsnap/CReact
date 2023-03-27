@@ -59,9 +59,33 @@ export const reconcileTests = [
   //     </TestClassComponent>
   //   )
   // },
+  // { 
+  //   from: <div onClick={() => console.log('here')} hell="no">Test</div>,
+  //   to: <div>Test</div>,
+  // },
+  // { 
+  //   from: <div onClick={() => console.log('here')} hell="no">Test</div>,
+  //   to: <div>Test</div>,
+  // },
   { 
-    from: <div onClick={() => console.log('here')} hell="no">Test</div>,
-    to: <div>Test</div>,
+    from: (
+      <TestComponent>
+        <div>
+          <li key="#1">Test #1</li>
+          <li key="#2">Test #2</li>
+          <li key="#3">Test #3</li>
+        </div>
+      </TestComponent>
+    ),
+    to: (
+      <TestComponent>
+        <div>
+          <li key="#1">Test #1</li>
+          <li key="#2">Test #1</li>
+          <li key="#3">Test #3</li>
+        </div>
+    </TestComponent>
+    ),
   }
 ];
 

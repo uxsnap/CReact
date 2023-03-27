@@ -75,27 +75,33 @@ export const reconcile = (vdom, dom, parent) => {
       dom.tagName.toLowerCase() === vdom.type
     ) {
       const newProps = vdom.props;
+      const curChildNodes = {};
 
-      const curChildNodes = [];
-
-      Array.from(dom.childNodes).flat().forEach((child, ind) => {
-        curChildNodes[ind] = child;
-      });
+      Array.from(dom.childNodes).flat().forEach((child, ind) => curChildNodes[child.__key || ind] = child);
 
       for (const attr of dom.getAttributeNames()) dom.removeAttribute(attr);
       for (const event in dom.__eventHandlers || {}) {
         dom.removeEventListener(event, dom.__eventHandlers[event]);
         dom.__eventHandlers[event] = null;
       }
+
       for (const prop in newProps) setProp(dom, prop, newProps[prop]);
 
       vdom.children.flat().forEach((child, ind) => {
-        if (curChildNodes[ind]) {
-          reconcile(child, curChildNodes[ind], dom);
-        } else {
-          dom.appendChild(render(child, dom));
+        let key = (child.props || {}).key || ind;
+
+        if (curChildNodes[key] === undefined) {
+          dom.insertBefore(render(child, dom), dom.childNodes[ind]);
+          console.log("INSERTED NEW CHILD TO DOM");
+        }
+        else {
+          console.log("RECONCILED OLD CHILD WITH THE SAME KEY");
+          reconcile(child, curChildNodes[key], dom);
+          delete curChildNodes[key];
         }
       });
+
+      for (let key in curChildNodes) curChildNodes[key].remove();
 
       return dom;
     }
