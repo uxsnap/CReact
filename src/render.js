@@ -35,16 +35,16 @@ const mount = (parent) =>
 export const renderComponent = (vdom, parent) => {
   const props = Object.assign({}, vdom.props, { children: vdom.children });
 
-  let component;
-
   if (vdom.type.prototype instanceof Component) {
-    component = new vdom.type(props);
+    const component = new vdom.type(props);
     component.__dom = render(component.render(), parent);
+    component.__dom.__key = props.key || undefined;
     component.__dom.__instance = component;
 
     return component.__dom;
   } else {
-    component = vdom.type(props);
+    const component = new vdom.type(props);
+    component.props.key = props.key || undefined;
     return render(component, parent);
   }
 };
@@ -98,6 +98,9 @@ export const render = (vdom, parent) => {
  * We start with the simple things and then add keys, refs, and other stuff
  */
 export const setProp = (dom, key, value) => {
+  if (key === "key") {
+    return dom.__key = value;
+  }
   if (key === "style") {
     return Object.assign(dom.style, value);
   } 
