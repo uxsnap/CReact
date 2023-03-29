@@ -1,4 +1,4 @@
-import { reconcileComponent } from "./reconcile";
+import { reconcile } from "./reconcile";
 
 export class Component {
   constructor(props) {
@@ -9,6 +9,6 @@ export class Component {
   setState(newState) {
     if (!this.__dom) return;
     this.state = newState;
-    reconcileComponent(this.render(), this.__dom);
+    reconcile(this.render(), this.__dom);
   }
 }

@@ -2,7 +2,6 @@
 
 - [X] Implement events handling
 - [X] Implement keys handling
-- [ ] Refactor tests code to be more readable
 - [X] Add render outline to figure out when the component has rerendered
 - [ ] Test the final version of the code
 - [ ] **Write enough tests to be sure that everything works perfectly**
@@ -11,3 +10,4 @@
 - [ ] Add support to `refs` ( later )
 - [ ] Add support to `Context Api` ( later )
 - [ ] Make setState work with queue
+- [ ] Move logs enabling to args 

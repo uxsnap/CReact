@@ -1,5 +1,5 @@
 import { Component } from "./component";
-import { __RERENDER_HELPER } from './helpers';
+import { __RERENDER_HELPER } from '../helpers';
 
 export const createElement = (type, props, ...children) => ({
   type,
@@ -64,7 +64,7 @@ export const renderComponent = (vdom, parent) => {
  * All the creations of the elements will go
  * in render function
  */
-export const render = (vdom, parent, options = { removeOutlineTime: 0 }) => {
+export const render = (vdom, parent, removeOutlineTime = 300) => {
   const type = typeof vdom;
 
   const innerMount = mount(parent);
@@ -90,10 +90,9 @@ export const render = (vdom, parent, options = { removeOutlineTime: 0 }) => {
       
     for (let prop in vdom.props) setProp(dom, prop, vdom.props[prop]);
 
-    for (let child of vdom.children.flat()) 
-      render(child, dom, { removeOutlineTime: options.removeOutlineTime * 2 });
+    for (let child of vdom.children.flat()) render(child, dom, removeOutlineTime * 2);
     
-    return innerMount(dom, options.removeOutlineTime);
+    return innerMount(dom, removeOutlineTime);
   }
 
   return document.createTextNode("Error");
