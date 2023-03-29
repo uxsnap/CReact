@@ -1,22 +1,44 @@
-import { Component } from './component';
-import { render, createElement } from './render';
+import { Component } from './main/component';
+import { render, createElement } from './main/render';
 import { testMain } from './tests';
 
 /** @jsxRuntime classic */
 /** @jsx createElement */
 
-testMain('reconcile');
-// class TodoList extends Component {
-//     render() {
-//         return (
-//             <ul>
-//                 <li>1</li>    
-//                 <li>2</li>    
-//                 <li>3</li>    
-//                 <li>4</li>    
-//             </ul>
-//         );
-//     }
-// }
+// testMain('reconcile');
 
-// render(<TodoList />, document.getElementById('app'),  { removeOutlineTime: 0 });
+const TodoItem = ({ children, onClick }) => {
+    return (
+        <li>
+            <span>{children}</span>
+            <a onClick={onClick} href="#">Click</a>
+        </li>
+    );
+};
+class TodoList extends Component {
+    constructor() {
+        super();
+        this.state = {
+            items: [1,2,3,4],
+        };
+    }
+
+    removeItem(item) {
+        console.log(item);
+        this.setState({
+            items: this.state.items.filter(i => i !== item)
+        })
+    }
+
+    render() {
+        return (
+            <ul>
+                {this.state.items.map(item => (
+                    <TodoItem key={item} onClick={() => this.removeItem(item)}>{item}</TodoItem>    
+                ))}  
+            </ul>
+        );
+    }
+}
+
+render(<TodoList />, document.getElementById('app'));

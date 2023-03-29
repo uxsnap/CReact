@@ -1,5 +1,5 @@
-import { Component } from "../component";
-import { render, createElement } from "../render";
+import { Component } from "../main/component";
+import { render, createElement } from "../main/render";
 
 /** @jsxRuntime classic */
 /** @jsx createElement */
@@ -22,35 +22,35 @@ class TestClassComponent extends Component {
 }
 
 export const renderTests = [
-  // 5,
-  // 6,
-  // 123123,
-  // "hey there little fella",
-  // `nice to meet you too ${5555}`,
-  // null,
-  // undefined,
-  // true,
-  // false,
-  // { a: { b: { c: "d" } } },
-  // [1, 2, 3, 4, 5],
-  // <ul>
-  //   <li>Hey</li>
-  //   <li>there</li>
-  //   <li>fella</li>
-  // </ul>,
-  // <ul>
-  //   <li>{true}</li>
-  //   <li>{false}</li>
-  //   <li>{5673}</li>
-  //   <li>{"Heheh"}</li>
-  //   <li>{null}</li>
-  //   <li>
-  //     <p>Inner {5}</p>
-  //   </li>
-  // </ul>,
-  // <TestComponent>Damn</TestComponent>,
-  // <TestClassComponent>Test class component</TestClassComponent>,
-  // <div onClick={() => console.log('here')}>Test</div>,
+  5,
+  6,
+  123123,
+  "hey there little fella",
+  `nice to meet you too ${5555}`,
+  null,
+  undefined,
+  true,
+  false,
+  { a: { b: { c: "d" } } },
+  [1, 2, 3, 4, 5],
+  <ul>
+    <li>Hey</li>
+    <li>there</li>
+    <li>fella</li>
+  </ul>,
+  <ul>
+    <li>{true}</li>
+    <li>{false}</li>
+    <li>{5673}</li>
+    <li>{"Heheh"}</li>
+    <li>{null}</li>
+    <li>
+      <p>Inner {5}</p>
+    </li>
+  </ul>,
+  <TestComponent>Damn</TestComponent>,
+  <TestClassComponent>Test class component</TestClassComponent>,
+  <div onClick={() => console.log('here')}>Test</div>,
   <div key="key">Test</div>,
   <TestComponent key="key">Damn</TestComponent>,
   <TestClassComponent key="key">Test class component</TestClassComponent>,
