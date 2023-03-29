@@ -1,4 +1,5 @@
 import { Component } from "./component";
+import { __RERENDER_HELPER } from './helpers';
 
 export const createElement = (type, props, ...children) => ({
   type,
@@ -24,8 +25,15 @@ export const createElement = (type, props, ...children) => ({
  * We just need to append child to the dom when it has parent
  * When it doesn't have one it appears that the child itself is a parent (root component)
  */
-const mount = (parent) =>
-  parent ? (dom) => parent.appendChild(dom) && dom : (dom) => dom;
+const mount = (parent) => (dom, removeOutlineTime) => {
+    if (parent) {
+      __RERENDER_HELPER(dom, removeOutlineTime);
+
+      parent.appendChild(dom);
+    }
+
+    return dom;
+  };
 
 /**
  *
@@ -52,10 +60,11 @@ export const renderComponent = (vdom, parent) => {
 /**
  * @param {VDomObject} vdom - node to be rendered
  * @param {DomNode} parent - node to be applied
+ * @param {Object} options
  * All the creations of the elements will go
  * in render function
  */
-export const render = (vdom, parent) => {
+export const render = (vdom, parent, options = { removeOutlineTime: 0 }) => {
   const type = typeof vdom;
 
   const innerMount = mount(parent);
@@ -74,16 +83,17 @@ export const render = (vdom, parent) => {
 
   if (type === "object") {
     if (!vdom.type) return innerMount(document.createTextNode(vdom.toString()));
-    // We will be rendering components here in the future
-    if (typeof vdom.type === "function")
-      return innerMount(renderComponent(vdom, parent));
+
+    if (typeof vdom.type === "function") return innerMount(renderComponent(vdom, parent));
       
-      const dom = document.createElement(vdom.type);
+    const dom = document.createElement(vdom.type);
       
     for (let prop in vdom.props) setProp(dom, prop, vdom.props[prop]);
-    for (let child of vdom.children.flat()) render(child, dom);
 
-    return innerMount(dom);
+    for (let child of vdom.children.flat()) 
+      render(child, dom, { removeOutlineTime: options.removeOutlineTime * 2 });
+    
+    return innerMount(dom, options.removeOutlineTime);
   }
 
   return document.createTextNode("Error");

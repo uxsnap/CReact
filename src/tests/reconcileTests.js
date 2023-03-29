@@ -1,6 +1,6 @@
-import { createElement, render } from "./render";
-import { reconcile } from "./reconcile";
-import { Component } from "./component";
+import { createElement, render } from "../render";
+import { reconcile } from "../reconcile";
+import { Component } from "../component";
 
 /** @jsxRuntime classic */
 /** @jsx createElement */
@@ -74,6 +74,9 @@ export const reconcileTests = [
           <li key="#1">Test #1</li>
           <li key="#2">Test #2</li>
           <li key="#3">Test #3</li>
+          <li key="#4">Test #3</li>
+          <li key="#5">Test #3</li>
+          <li key="#6">Test #3</li>
         </div>
       </TestComponent>
     ),
@@ -81,8 +84,11 @@ export const reconcileTests = [
       <TestComponent>
         <div>
           <li key="#1">Test #1</li>
-          <li key="#2">Test #1</li>
+          <li key="#2">Test #2</li>
           <li key="#3">Test #3</li>
+          <li key="#4">Test #3</li>
+          <li key="#5">Test #3</li>
+          <li key="#6">Test #3</li>
         </div>
     </TestComponent>
     ),

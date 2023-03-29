@@ -1,5 +1,5 @@
-import { Component } from "./component";
-import { render, createElement } from "./render";
+import { Component } from "../component";
+import { render, createElement } from "../render";
 
 /** @jsxRuntime classic */
 /** @jsx createElement */
