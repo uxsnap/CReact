@@ -86,7 +86,7 @@ export const reconcile = (vdom, dom, parent) => {
       }
 
       for (const prop in newProps) setProp(dom, prop, newProps[prop]);
-
+      
       vdom.children.flat().forEach((child, ind) => {
         let key = (child.props || {}).key || ind;
 
