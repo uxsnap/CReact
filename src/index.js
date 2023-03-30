@@ -8,10 +8,11 @@ import { testMain } from './tests';
 // testMain('reconcile');
 
 const TodoItem = ({ children, onClick }) => {
+    
     return (
         <li>
             <span>{children}</span>
-            <a onClick={onClick} href="#">Click</a>
+            <a onClick={onClick} href={"#" + children}>Click</a>
         </li>
     );
 };
