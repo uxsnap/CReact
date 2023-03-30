@@ -92,14 +92,14 @@ export const reconcile = (vdom, dom, parent) => {
         let key = (child.props || {}).key || `___key__${ind}__`;
         __LOG(curChildNodes, key);
 
-        if (curChildNodes[key] === undefined) {
-          dom.insertBefore(render(child, dom), dom.childNodes[ind]);
-          __LOG("INSERTED NEW CHILD TO DOM");
-        }
-        else {
+        if (key in curChildNodes) {
           reconcile(child, curChildNodes[key], dom);
           __LOG("RECONCILED OLD CHILD WITH THE SAME KEY", key);
           delete curChildNodes[key];
+        }
+        else {
+          dom.insertBefore(render(child, dom), dom.childNodes[ind]);
+          __LOG("INSERTED NEW CHILD TO DOM");
         }
       });
 

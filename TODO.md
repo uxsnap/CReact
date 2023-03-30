@@ -6,8 +6,7 @@
 - [ ] Test the final version of the code
 - [ ] **Write enough tests to be sure that everything works perfectly**
 - [ ] Implement class component life-cycle methods
-- [ ] Make `createElement` with only 2 first arguments 
 - [ ] Add support to `refs` ( later )
 - [ ] Add support to `Context Api` ( later )
-- [ ] Make setState work with queue
-- [ ] Move logs enabling to args 
+- [X] Make setState work with queue
+- [ ] Move logs enabling to args
