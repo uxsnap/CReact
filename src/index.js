@@ -7,14 +7,26 @@ import { testMain } from './tests';
 
 // testMain('reconcile');
 
-const TodoItem = ({ children, onClick }) => {
-    
-    return (
-        <li>
-            <span>{children}</span>
-            <a onClick={onClick} href={"#" + children}>Click</a>
-        </li>
-    );
+class TodoItem extends Component {
+    constructor(props) {
+        super(props);
+
+        this.todoClick = this.todoClick.bind(this);
+    }
+
+    todoClick() {
+        this.props.onClick();
+        console.log('todo item ' + this.props.children)
+    }
+
+    render() {
+        return (
+            <li>
+                <span>{this.props.children}</span>
+                <a onClick={this.todoClick} href={"#" + this.props.children}>Click</a>
+            </li>
+        );
+    }
 };
 class TodoList extends Component {
     constructor() {
@@ -22,13 +34,23 @@ class TodoList extends Component {
         this.state = {
             items: [1,2,3,4],
         };
+
+        this.removeItem = this.removeItem.bind(this);
     }
 
-    removeItem(item) {
-        console.log(item);
+    removeItem() {
         this.setState({
-            items: this.state.items.filter(i => i !== item)
-        })
+            items: this.state.items.filter(i => i !== 1)
+        });
+        this.setState({
+            items: this.state.items.filter(i => i !== 2)
+        });
+        this.setState({
+            items: this.state.items.filter(i => i !== 3)
+        });
+        this.setState({
+            items: this.state.items.filter(i => i !== 4)
+        });
     }
 
     render() {
