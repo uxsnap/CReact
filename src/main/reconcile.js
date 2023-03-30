@@ -11,8 +11,9 @@
  * are tags. If they're not - full rerender
  * of the node and all of its children (can be optimized)
  * component -> component - it will handled with another function
- */
+*/
 
+import { __LOG  } from "../helpers";
 import { render, setProp } from "./render";
 import { Component } from "./component";
 
@@ -25,11 +26,11 @@ const replace = (parent) => {
   return parent
     ? (oldN, newN) => {
         parent.replaceChild(newN, oldN);
-        console.log("REPLACED IN PARENT: ", parent);
+        __LOG("REPLACED IN PARENT: ", parent);
         return newN;
       }
     : (_, newN) => {
-        console.log("RETURNED: ", newN);
+        __LOG("RETURNED: ", newN);
         return newN;
       };
 };
@@ -49,11 +50,11 @@ export const reconcile = (vdom, dom, parent) => {
 
   if (dom.nodeType === NODE_TYPES.TEXT) {
     if (vdom != null && vdom.toString() === dom.textContent) {
-      console.log("RECONCILIATION OF TEXT WITH SAME VALUE: " + dom.nodeValue);
+      __LOG("RECONCILIATION OF TEXT WITH SAME VALUE: " + dom.nodeValue);
       return dom;
     } else {
-      console.log("RECONCILIATION OF TEXT: " + dom.nodeValue);
-      console.log("TO TEXT: " + vdom);
+      __LOG("RECONCILIATION OF TEXT: " + dom.nodeValue);
+      __LOG("TO TEXT: " + vdom);
     }
     return innerReplace(dom, render(vdom, parent));
   }
@@ -89,15 +90,15 @@ export const reconcile = (vdom, dom, parent) => {
       
       vdom.children.flat().forEach((child, ind) => {
         let key = (child.props || {}).key || `___key__${ind}__`;
-        console.log(curChildNodes, key);
+        __LOG(curChildNodes, key);
 
         if (curChildNodes[key] === undefined) {
           dom.insertBefore(render(child, dom), dom.childNodes[ind]);
-          console.log("INSERTED NEW CHILD TO DOM");
+          __LOG("INSERTED NEW CHILD TO DOM");
         }
         else {
           reconcile(child, curChildNodes[key], dom);
-          console.log("RECONCILED OLD CHILD WITH THE SAME KEY", key);
+          __LOG("RECONCILED OLD CHILD WITH THE SAME KEY", key);
           delete curChildNodes[key];
         }
       });

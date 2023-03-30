@@ -129,7 +129,7 @@ export const setProp = (dom, key, value) => {
  */
 const setEventListener = (dom, key, value) => {
   const event = key.slice(2,).toLowerCase();
-
+  
   dom.__eventHandlers = dom.__eventHandlers || {};
   dom.__eventHandlers[event] = value;
   dom.addEventListener(event, dom.__eventHandlers[event]);
