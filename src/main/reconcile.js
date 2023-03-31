@@ -13,7 +13,7 @@
  * component -> component - it will handled with another function
 */
 
-import { __LOG  } from "../helpers";
+import { __LOG, getDerivedStateFromProps } from "../helpers";
 import { render, setProp } from "./render";
 import { Component } from "./component";
 
@@ -132,7 +132,13 @@ export const reconcileClassComponent = (vdom, dom, parent, newProps) => {
     dom.__instance &&
     dom.__instance.constructor === vdom.type.prototype.constructor
   ) {
+    getDerivedStateFromProps(vdom, dom.__instance);
     dom.__instance.props = newProps;
+
+    if (!dom.__instance.shouldComponentUpdate(newProps, dom.__instance.state)) {
+      return dom;
+    }
+
     return reconcile(dom.__instance.render(), dom, parent);
   } else {
     return render(vdom, parent);

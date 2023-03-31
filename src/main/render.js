@@ -1,5 +1,5 @@
 import { Component } from "./component";
-import { __RERENDER_HELPER } from '../helpers';
+import { __RERENDER_HELPER, getDerivedStateFromProps } from '../helpers';
 
 export const createElement = (type, props, ...children) => ({
   type,
@@ -45,9 +45,16 @@ export const renderComponent = (vdom, parent) => {
 
   if (vdom.type.prototype instanceof Component) {
     const component = new vdom.type(props);
+
+    getDerivedStateFromProps(vdom, component);
+
     component.__dom = render(component.render(), parent);
     component.__dom.__key = props.key || undefined;
     component.__dom.__instance = component;
+
+    if (component.componentDidMount) {
+      component.componentDidMount();
+    }
 
     return component.__dom;
   } else {

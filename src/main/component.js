@@ -19,7 +19,21 @@ export class Component {
   }
 
   setState(newState) {
-    this.__CALL_QUEUE.push(newState);
-    requestIdleCallback(() => this.__flush());
+    if (this.__dom && this.shouldComponentUpdate(this.props, newState)) {
+      this.__CALL_QUEUE.push(newState);
+      requestIdleCallback(() => this.__flush());
+    }
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
+
+  componentDidMount() {}
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {}
 }

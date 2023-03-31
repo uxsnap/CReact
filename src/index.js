@@ -1,5 +1,4 @@
-import { Todo } from './examples/Todo';
-import { CustomTextInput } from './examples/RefTest';
+import { ComponentDidMountTest } from './examples';
 import { render, createElement } from './main/render';
 import './style/index.scss';
 
@@ -7,4 +6,4 @@ import './style/index.scss';
 /** @jsx createElement */
 
 // render(<Todo />, document.getElementById('app'));
-render(<CustomTextInput />, document.getElementById('app'));
+render(<ComponentDidMountTest />, document.getElementById('app'));
