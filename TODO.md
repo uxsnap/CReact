@@ -9,4 +9,4 @@
 - [ ] Add support to `refs` ( later )
 - [ ] Add support to `Context Api` ( later )
 - [X] Make setState work with queue
-- [ ] Move logs enabling to args
+- [X] Move logs enabling to args

@@ -107,17 +107,25 @@ export const render = (vdom, parent, removeOutlineTime = 300) => {
  * We start with the simple things and then add keys, refs, and other stuff
  */
 export const setProp = (dom, key, value) => {
+  if (['checked', 'className'].includes(key)) {
+    dom[key] = value;
+    return;
+  }
+
   if (key === "key") {
-    return dom.__key = value;
+    dom.__key = value;
+    return; 
   }
   if (key === "style") {
-    return Object.assign(dom.style, value);
+    Object.assign(dom.style, value);
+    return; 
   } 
   if (key.startsWith('on')) {
-    return setEventListener(dom, key, value);
+    setEventListener(dom, key, value);
+    return; 
   }
   
-  return dom.setAttribute(key, value);
+  dom.setAttribute(key, value);
 };
 
 /**
