@@ -112,6 +112,11 @@ export const setProp = (dom, key, value) => {
     return;
   }
 
+  if (key === 'ref') {
+    value.current = dom;
+    return;
+  }
+
   if (key === "key") {
     dom.__key = value;
     return; 

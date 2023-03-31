@@ -6,7 +6,7 @@
 - [ ] Test the final version of the code
 - [ ] **Write enough tests to be sure that everything works perfectly**
 - [ ] Implement class component life-cycle methods
-- [ ] Add support to `refs` ( later )
+- [X] Add support to `refs`
 - [ ] Add support to `Context Api` ( later )
 - [X] Make setState work with queue
 - [X] Move logs enabling to args
