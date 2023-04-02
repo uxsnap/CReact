@@ -15,3 +15,9 @@ export const __RERENDER_HELPER = (dom, removeOutlineTime) => {
 export const __LOG = (text) => {
   __SHOW_LOGS && console.log(text);
 };
+
+export const __SHALLOW_COMPARE = (a, b) => {
+  for (let k in a) if (a[k] !== b[k]) return false;
+
+  return true;
+};

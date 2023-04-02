@@ -52,9 +52,7 @@ export const renderComponent = (vdom, parent) => {
     component.__dom.__key = props.key || undefined;
     component.__dom.__instance = component;
 
-    if (component.componentDidMount) {
-      component.componentDidMount();
-    }
+    component.componentDidMount();
 
     return component.__dom;
   } else {

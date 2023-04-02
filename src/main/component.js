@@ -25,15 +25,13 @@ export class Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
+  shouldComponentUpdate(nextProps, nextState) { return true; }
 
   componentDidMount() {}
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    return null;
-  }
+  getSnapshotBeforeUpdate(prevProps, prevState) { return null; }
 
   componentDidUpdate(prevProps, prevState, snapshot) {}
+
+  componentWillUnmount() {}
 }
