@@ -7,6 +7,16 @@ export const createElement = (type, props, ...children) => ({
   children
 });
 
+export const Fragment = (props) => {
+  const fragment = new DocumentFragment(); 
+
+  props.children.flat().forEach(child => {
+    fragment.appendChild(render(child));
+  });
+
+  return fragment;
+}
+
 // what we want to render
 /**
  *
@@ -51,10 +61,13 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 300) => {
     component.__dom = render(component.render(), parent, removeOutlineTime);
     component.__dom.__key = props.key || undefined;
     component.__dom.__instance = component;
-
+    
     component.componentDidMount();
 
     return component.__dom;
+  } else if (vdom.type.name === 'Fragment') {
+    const component = new vdom.type(props);
+    return mount(parent)(component);
   } else {
     const component = new vdom.type(props);
     component.props.key = props.key || undefined;
