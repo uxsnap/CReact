@@ -40,7 +40,7 @@ const mount = (parent) => (dom, removeOutlineTime) => {
  * @param {VDomObject} vdom
  * @param {DomNode} parent
  */
-export const renderComponent = (vdom, parent) => {
+export const renderComponent = (vdom, parent, removeOutlineTime = 300) => {
   const props = Object.assign({}, vdom.props, { children: vdom.children });
 
   if (vdom.type.prototype instanceof Component) {
@@ -48,7 +48,7 @@ export const renderComponent = (vdom, parent) => {
 
     getDerivedStateFromProps(vdom, component);
 
-    component.__dom = render(component.render(), parent);
+    component.__dom = render(component.render(), parent, removeOutlineTime);
     component.__dom.__key = props.key || undefined;
     component.__dom.__instance = component;
 
@@ -58,7 +58,7 @@ export const renderComponent = (vdom, parent) => {
   } else {
     const component = new vdom.type(props);
     component.props.key = props.key || undefined;
-    return render(component, parent);
+    return render(component, parent, removeOutlineTime);
   }
 };
 
@@ -83,13 +83,14 @@ export const render = (vdom, parent, removeOutlineTime = 300) => {
       type === "boolean" && !vdom ? "" : vdom
     );
 
-    return innerMount(text);
+    return innerMount(text, removeOutlineTime);
   }
 
   if (type === "object") {
-    if (!vdom.type) return innerMount(document.createTextNode(vdom.toString()));
+    if (!vdom.type) return innerMount(document.createTextNode(vdom.toString()), removeOutlineTime);
 
-    if (typeof vdom.type === "function") return innerMount(renderComponent(vdom, parent));
+    if (typeof vdom.type === "function") 
+      return innerMount(renderComponent(vdom, parent, removeOutlineTime * 2), removeOutlineTime);
       
     const dom = document.createElement(vdom.type);
       
@@ -118,6 +119,11 @@ export const setProp = (dom, key, value) => {
   }
 
   if (key === 'ref') {
+    if (typeof value === "function") {
+      value(dom);
+      return;
+    }
+
     value.current = dom;
     return;
   }
