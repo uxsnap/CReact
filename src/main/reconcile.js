@@ -120,6 +120,7 @@ export const reconcileComponent = (vdom, dom, parent) => {
   const props = Object.assign({}, vdom.props, {
     children: vdom.children.flat()
   });
+
   if (vdom.type.prototype instanceof Component) {
     return reconcileClassComponent(vdom, dom, parent, props);
   } else {
@@ -133,14 +134,24 @@ export const reconcileClassComponent = (vdom, dom, parent, newProps) => {
     dom.__instance.constructor === vdom.type.prototype.constructor
   ) {
     getDerivedStateFromProps(vdom, dom.__instance);
+    
+    const prevProps = dom.__instance.props;
     dom.__instance.props = newProps;
 
+    const snapshot = dom.__instance.getSnapshotBeforeUpdate(prevProps, dom.__instance.state);
+    
     if (!dom.__instance.shouldComponentUpdate(newProps, dom.__instance.state)) {
       return dom;
     }
 
-    return reconcile(dom.__instance.render(), dom, parent);
+    const updated = reconcile(dom.__instance.render(), dom, parent);
+
+    dom.__instance.componentDidUpdate(prevProps, dom.__instance.state, snapshot);
+
+    return updated;
   } else {
+    dom.__instance.componentWillUnmount();
+
     return render(vdom, parent);
   }
 };
