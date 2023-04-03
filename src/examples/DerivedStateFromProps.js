@@ -1,9 +1,6 @@
 import { Component } from '../main/component';
 import { createElement } from '../main/render';
-
-/** @jsxRuntime classic */
-/** @jsx createElement */
-
+ 
 export class DerivedStateExample extends Component {
   render() {
     return (

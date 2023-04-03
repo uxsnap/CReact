@@ -2,9 +2,6 @@ import { Component } from '../main/component';
 import { createElement } from '../main/render';
 import { createRef } from '../main/ref';
 
-/** @jsxRuntime classic */
-/** @jsx createElement */
-
 export class CustomTextInputWithRef extends Component {
     constructor(props) {
         super(props);
