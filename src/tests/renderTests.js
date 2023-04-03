@@ -1,8 +1,8 @@
 import { Component } from "../main/component";
 import { render, createElement } from "../main/render";
 
-/** @jsxRuntime classic */
-/** @jsx createElement */
+ 
+ 
 
 export const renderRoot = document.getElementById("render");
 

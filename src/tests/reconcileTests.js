@@ -2,8 +2,8 @@ import { createElement, render } from "../main/render";
 import { reconcile } from "../main/reconcile";
 import { Component } from "../main/component";
 
-/** @jsxRuntime classic */
-/** @jsx createElement */
+ 
+ 
 
 export const reconcileRoot = document.getElementById("reconcile");
 
