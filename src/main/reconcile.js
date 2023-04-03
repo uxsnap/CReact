@@ -13,14 +13,9 @@
  * component -> component - it will handled with another function
 */
 
-import { __LOG, getDerivedStateFromProps } from "../helpers";
+import { __LOG, getDerivedStateFromProps, NODE_TYPES } from "../helpers";
 import { render, setProp } from "./render";
 import { Component } from "./component";
-
-const NODE_TYPES = {
-  NODE: 1,
-  TEXT: 3
-};
 
 const replace = (parent) => {
   return parent

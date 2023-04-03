@@ -87,7 +87,7 @@ export const render = (vdom, parent, removeOutlineTime = 300) => {
 
   const innerMount = mount(parent);
 
-  if (vdom == null) {
+  if (vdom == null || isNaN(vdom)) {
     return innerMount(document.createTextNode(""));
   }
 
@@ -150,10 +150,12 @@ export const setProp = (dom, key, value) => {
     dom.__key = value;
     return; 
   }
+
   if (key === "style") {
     Object.assign(dom.style, value);
     return; 
   } 
+  
   if (key.startsWith('on')) {
     setEventListener(dom, key, value);
     return; 
