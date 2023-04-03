@@ -17,4 +17,3 @@
 - [X] Move logs enabling to args
 - [ ] Create Site and explain everything using components created by this module
 - [ ] Add support to `Context Api` ( later )
-- [ ] **Write enough tests to be sure that everything works perfectly**

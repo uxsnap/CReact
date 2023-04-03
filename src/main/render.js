@@ -50,7 +50,7 @@ const mount = (parent) => (dom, removeOutlineTime) => {
  * @param {VDomObject} vdom
  * @param {DomNode} parent
  */
-export const renderComponent = (vdom, parent, removeOutlineTime = 300) => {
+export const renderComponent = (vdom, parent, removeOutlineTime = 100) => {
   const props = Object.assign({}, vdom.props, { children: vdom.children });
 
   if (vdom.type.prototype instanceof Component) {
@@ -59,7 +59,7 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 300) => {
     getDerivedStateFromProps(vdom, component);
 
     component.__dom = render(component.render(), parent, removeOutlineTime);
-    component.__dom.__key = props.key || undefined;
+    component.__dom.__key = (props && props.key) || undefined;
     component.__dom.__instance = component;
     
     component.componentDidMount();
@@ -69,8 +69,13 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 300) => {
     const component = new vdom.type(props);
     return mount(parent)(component);
   } else {
-    const component = new vdom.type(props);
-    component.props.key = props.key || undefined;
+    const component = vdom.type(props);
+
+    // Need to fix this part
+    if (component.props) {
+      component.props.key = (props && props.key) || undefined;
+    }
+
     return render(component, parent, removeOutlineTime);
   }
 };
@@ -82,12 +87,13 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 300) => {
  * All the creations of the elements will go
  * in render function
  */
-export const render = (vdom, parent, removeOutlineTime = 300) => {
+export const render = (vdom, parent, removeOutlineTime = 100) => {
   const type = typeof vdom;
-
+  const newRemoveOutline = removeOutlineTime ? removeOutlineTime + 100 : 0;
+  
   const innerMount = mount(parent);
 
-  if (vdom == null || isNaN(vdom)) {
+  if (vdom == null || Number.isNaN(vdom)) {
     return innerMount(document.createTextNode(""));
   }
 
@@ -103,13 +109,13 @@ export const render = (vdom, parent, removeOutlineTime = 300) => {
     if (!vdom.type) return innerMount(document.createTextNode(vdom.toString()), removeOutlineTime);
 
     if (typeof vdom.type === "function") 
-      return innerMount(renderComponent(vdom, parent, removeOutlineTime * 2), removeOutlineTime);
+      return innerMount(renderComponent(vdom, parent, newRemoveOutline), removeOutlineTime);
       
     const dom = document.createElement(vdom.type);
       
     for (let prop in vdom.props) setProp(dom, prop, vdom.props[prop]);
 
-    for (let child of vdom.children.flat()) render(child, dom, removeOutlineTime * 2);
+    for (let child of vdom.children.flat()) render(child, dom, newRemoveOutline);
     
     return innerMount(dom, removeOutlineTime);
   }

@@ -1,5 +1,5 @@
-import { Todo } from './examples';
 import { render, createElement } from './main/render';
-import './style/index.scss';
+import App from './app';
+import './app/style/index.scss';
 
-render(<Todo />, document.getElementById('app'));
+render(<App />, document.getElementById('app'));
