@@ -1,11 +1,20 @@
 {
-  "plugins": ["@babel/syntax-dynamic-import", "@babel/plugin-syntax-jsx", 
-  [
-    "@babel/plugin-transform-react-jsx",
-    {
-      "pragma": "createElement"
-    }
-  ]
+  "plugins": [
+    "@babel/syntax-dynamic-import", 
+    "@babel/plugin-syntax-jsx", 
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "pragma": "createElement"
+      }
+    ],
+    [
+      "prismjs", {
+        "languages": ["javascript", "css", "markup"],
+        "plugins": ["line-numbers", "copy-to-clipboard"],
+        "css": true
+      }
+    ]
   ],
   "presets": [
     [

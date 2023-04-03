@@ -1,5 +1,6 @@
 import { createElement } from "../../main/render";
-import { Title, Paragraph } from "../components";
+import { Title, Paragraph, CodeBlock } from "../components";
+import { CREATE_ELEMENT  } from "../code";
 
 export const Introduction = () => (
   <div class="container">
@@ -31,7 +32,9 @@ export const Introduction = () => (
 
     <Paragraph>
       After completing all chapters you can create your copy of this library and write 
-      yourself a Todo! 
+      yourself decent Todo! 
     </Paragraph>
+
+    <CodeBlock code={CREATE_ELEMENT} />
   </div>
 );
