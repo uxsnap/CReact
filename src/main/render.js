@@ -126,6 +126,11 @@ export const render = (vdom, parent, removeOutlineTime = 300) => {
  * We start with the simple things and then add keys, refs, and other stuff
  */
 export const setProp = (dom, key, value) => {
+  if (key === 'dangerouslySetInnerHTML' && !!value && !!value.__html) {
+    dom.innerHTML = value.__html;
+    return;
+  }
+
   if (['checked', 'className'].includes(key)) {
     dom[key] = value;
     return;

@@ -12,7 +12,7 @@
   - [X] componentDidUpdate
   - [X] componentWillUnmount
 - [X] Add support to `refs`
-- [ ] Add support to `dangerouslySetInnerHTML`
+- [X] Add support to `dangerouslySetInnerHTML`
 - [ ] Add support to `Context Api` ( later )
 - [X] Make setState work with queue
 - [X] Move logs enabling to args
