@@ -5,6 +5,9 @@
   flex-direction: column;
   justify-content: space-between;
 
+  background: rgba(0, 0, 0, 1);
+  color: white;
+
   &__list {
     li {
       margin-top: 10px;
@@ -19,6 +22,11 @@
     cursor: pointer;
     color: $text-color;
     font-size: 18px;
+
+    &:hover {
+      color: white;
+      transition: .3s color;
+    }
 
     &:first-child {
       margin-top: 0;
