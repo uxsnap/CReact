@@ -8,7 +8,10 @@ import {
   WEBPACK_1, 
   WEBPACK_2, 
   BABEL_1, 
-  INDEX_HTML_1
+  INDEX_HTML_1,
+  VDOM_1,
+  DOM_1,
+  DIR_2
 } from "../code";
 
 export const Introduction = () => (
@@ -81,5 +84,24 @@ export const Introduction = () => (
     </Paragraph>
 
     <CodeBlock code={CREATE_ELEMENT} fileName="render.js"  />
+
+    <Paragraph>
+      Here you have the function that <CodeWrap>React</CodeWrap> uses.<br />
+      It's main purpose is to give the ability of work with VDOM nodes.
+      So the JSX like this:
+    </Paragraph>
+    <CodeBlock code={DOM_1} langType="html" />
+    <Paragraph>
+      Will be prepared in VDOM like this: 
+    </Paragraph>
+    <CodeBlock code={VDOM_1} />
+
+    <Paragraph>
+      The structure of the project right now looks like this: 
+    </Paragraph>
+    
+    <CodeBlock code={DIR_2} langType="treeview"/>
+
+    <Paragraph>That's it for the lesson!</Paragraph>
   </Fragment>
 );
