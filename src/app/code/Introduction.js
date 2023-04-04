@@ -65,3 +65,41 @@ export const DIR_1 = `├── index.html
 ├── .babelrc
 └── webpack.config.js
 `;
+
+export const DOM_1 = `<ul>
+  <li key="1">
+    One
+  </li>
+  <li key="2">
+    <p>Two</p>
+  </li>
+  <li key="3">
+    <div>
+      <a href="#">Three</a>
+    </div>
+  </li>
+</ul>`;
+
+export const VDOM_1 = `createElement('ul', {}, [
+  createElement('li', { key: '1' }, ['One'],
+  createElement('li', { key: '2' }, [
+    createElement('p', {}, ['Two'])
+  ],
+  createElement('li', { key: '3' }, [
+    createElement('div', {}, [
+      createElement('a', { href: "#" }, ['Three'])
+    ])
+  ],
+])
+`;
+
+export const DIR_2 = `├── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── .babelrc
+├── src
+  ├── index.js
+  └── main
+     └── render.js
+└── webpack.config.js`
