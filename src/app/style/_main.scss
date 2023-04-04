@@ -2,10 +2,6 @@
   display: flex;
   align-items: flex-start;
 
-  .right {
-    flex-grow: 1;
-  }
-
   & > div {
     height: 100%;
   }

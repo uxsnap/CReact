@@ -35,7 +35,9 @@ class App extends Component {
         </div>
         
         <div className="right">
-          {this.getPageByChapterNum(this.state.chapter)}
+          <div className="container">
+            {this.getPageByChapterNum(this.state.chapter)}
+          </div>
         </div>
       </div>
     );
