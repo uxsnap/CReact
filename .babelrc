@@ -11,7 +11,7 @@
     [
       "prismjs", {
         "languages": ["javascript", "css", "markup"],
-        "plugins": ["line-numbers", "copy-to-clipboard"],
+        "plugins": ["line-numbers", "copy-to-clipboard", "treeview"],
         "css": true
       }
     ]
