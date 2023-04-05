@@ -13,7 +13,7 @@
  * component -> component - it will handled with another function
 */
 
-import { __LOG, getDerivedStateFromProps, NODE_TYPES } from "../helpers";
+import { __LOG, getDerivedStateFromProps, NODE_TYPES, prepareChildren } from "../helpers";
 import { render, setProp } from "./render";
 import { Component } from "./component";
 
@@ -83,7 +83,8 @@ export const reconcile = (vdom, dom, parent) => {
 
       for (const prop in newProps) setProp(dom, prop, newProps[prop]);
       
-      vdom.children.flat().forEach((child, ind) => {
+      const preparedChildren = prepareChildren(vdom.children.flat());
+      preparedChildren.forEach((child, ind) => {
         let key = (child && child.props || {}).key || `___key__${ind}__`;
         __LOG(curChildNodes, key);
 
