@@ -21,3 +21,19 @@ export const __SHALLOW_COMPARE = (a, b) => {
 
   return true;
 };
+
+/**
+ * @param {VDomObject[]} children
+ * Helper function to set event listener
+ */
+export const prepareChildren = (children) => {
+  let finalResult = [];
+
+  for (let i = 0; i < children.length; i++) {
+    if (children.type === '__fragment') {
+      finalResult = finalResult.concat(vdom.children);
+    } else finalResult.push(children[i]);
+  }
+
+  return finalResult;
+};

@@ -1,0 +1,1 @@
+export const RENDER_1 = `render(<App />, document.getElementById('app'));`

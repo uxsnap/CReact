@@ -1,5 +1,5 @@
 import { Component } from "./component";
-import { __RERENDER_HELPER, getDerivedStateFromProps } from '../helpers';
+import { __RERENDER_HELPER, getDerivedStateFromProps, prepareChildren } from '../helpers';
 
 export const createElement = (type, props, ...children) => ({
   type,
@@ -8,13 +8,9 @@ export const createElement = (type, props, ...children) => ({
 });
 
 export const Fragment = (props) => {
-  const fragment = new DocumentFragment(); 
-
-  props.children.flat().forEach(child => {
-    fragment.appendChild(render(child));
-  });
-
-  return fragment;
+  const children = props.children;
+  delete props.children;
+  return createElement('__fragment', props, ...children)
 }
 
 // what we want to render
@@ -65,9 +61,6 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 100) => {
     component.componentDidMount();
 
     return component.__dom;
-  } else if (vdom.type.name === 'Fragment') {
-    const component = new vdom.type(props);
-    return mount(parent)(component);
   } else {
     const component = vdom.type(props);
 
@@ -108,14 +101,20 @@ export const render = (vdom, parent, removeOutlineTime = 100) => {
   if (type === "object") {
     if (!vdom.type) return innerMount(document.createTextNode(vdom.toString()), removeOutlineTime);
 
-    if (typeof vdom.type === "function") 
-      return innerMount(renderComponent(vdom, parent, newRemoveOutline), removeOutlineTime);
-      
+    
+    if (typeof vdom.type === "function") {
+      return innerMount(
+        renderComponent(vdom, parent, newRemoveOutline), removeOutlineTime
+      );
+    }
     const dom = document.createElement(vdom.type);
       
     for (let prop in vdom.props) setProp(dom, prop, vdom.props[prop]);
 
-    for (let child of vdom.children.flat()) render(child, dom, newRemoveOutline);
+    const preparedChildren = prepareChildren(vdom.children.flat());
+    for (let child of preparedChildren) {
+      render(child, dom, newRemoveOutline);
+    }
     
     return innerMount(dom, removeOutlineTime);
   }

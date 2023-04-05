@@ -1,6 +1,6 @@
 import { Component } from "../main/component";
 import { createElement } from "../main/render";
-import { Introduction } from './pages'; 
+import { Introduction, BasicRendering } from './pages'; 
 import { Sidebar } from "./components";
 
 class App extends Component {
@@ -18,6 +18,8 @@ class App extends Component {
     switch (this.state.chapter) {
       case 0:
         return <Introduction />;
+      case 1:
+        return <BasicRendering />;
     }
   }
 
