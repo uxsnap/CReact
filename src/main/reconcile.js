@@ -13,7 +13,7 @@
  * component -> component - it will handled with another function
 */
 
-import { __LOG, getDerivedStateFromProps, NODE_TYPES, prepareChildren } from "../helpers";
+import { __LOG, getDerivedStateFromProps, NODE_TYPES } from "../helpers";
 import { render, setProp } from "./render";
 import { Component } from "./component";
 
@@ -36,7 +36,7 @@ const replace = (parent) => {
  * @param {DomNode} dom
  * @param {DomNode} parent
  */
-export const reconcile = (vdom, dom, parent) => {
+export const reconcile = (vdom, dom, parent = dom.parentNode) => {
   const innerReplace = replace(parent);
 
   if (typeof vdom === "object" && typeof vdom.type === "function") {
@@ -49,13 +49,14 @@ export const reconcile = (vdom, dom, parent) => {
       return dom;
     } else {
       __LOG("RECONCILIATION OF TEXT: " + dom.nodeValue);
-      __LOG("TO TEXT: " + vdom);
+      __LOG("TO OBJECT: " + vdom);
+      
+      return innerReplace(dom, render(vdom, parent))
     }
-    return innerReplace(dom, render(vdom, parent));
   }
 
   if (dom.nodeType === NODE_TYPES.NODE) {
-    if (vdom == null || !vdom.type) {
+    if (vdom == null || !vdom.type || typeof vdom === 'string') {
       return innerReplace(dom, render(vdom, parent));
     }
 
@@ -73,7 +74,12 @@ export const reconcile = (vdom, dom, parent) => {
       const newProps = vdom.props;
       const curChildNodes = {};
 
-      Array.from(dom.childNodes).flat().forEach((child, ind) => curChildNodes[child.__key || `___key__${ind}__`] = child);
+      Array
+        .from(dom.childNodes)
+        .flat()
+        .forEach((child, ind) => 
+          curChildNodes[child.__key || `___key__${ind}__`] = child
+        );
 
       for (const attr of dom.getAttributeNames()) dom.removeAttribute(attr);
       for (const event in dom.__eventHandlers || {}) {
@@ -82,9 +88,8 @@ export const reconcile = (vdom, dom, parent) => {
       }
 
       for (const prop in newProps) setProp(dom, prop, newProps[prop]);
-      
-      const preparedChildren = prepareChildren(vdom.children.flat());
-      preparedChildren.forEach((child, ind) => {
+
+      vdom.children.flat().forEach((child, ind) => {
         let key = (child && child.props || {}).key || `___key__${ind}__`;
         __LOG(curChildNodes, key);
 
@@ -99,7 +104,12 @@ export const reconcile = (vdom, dom, parent) => {
         }
       });
 
-      for (let key in curChildNodes) curChildNodes[key].remove();
+      for (let key in curChildNodes) {
+        if (curChildNodes[key].__instance) {
+          curChildNodes[key].__instance.componentWillUnmount();
+        }
+        curChildNodes[key].remove();
+      }
 
       return dom;
     }
@@ -120,7 +130,7 @@ export const reconcileComponent = (vdom, dom, parent) => {
   if (vdom.type.prototype instanceof Component) {
     return reconcileClassComponent(vdom, dom, parent, props);
   } else {
-    return reconcile(new vdom.type(props), dom, parent);
+    return reconcile(vdom.type(props), dom, parent);
   }
 };
 
@@ -141,13 +151,11 @@ export const reconcileClassComponent = (vdom, dom, parent, newProps) => {
     }
 
     const updated = reconcile(dom.__instance.render(), dom, parent);
-
+    
     dom.__instance.componentDidUpdate(prevProps, dom.__instance.state, snapshot);
 
     return updated;
   } else {
-    dom.__instance.componentWillUnmount();
-
     return render(vdom, parent);
   }
 };

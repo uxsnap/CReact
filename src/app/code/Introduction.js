@@ -1,3 +1,5 @@
+import { escapeHtml } from '../utils';
+
 export const PACKAGES_1 = `npm i -D webpack webpack-cli`
 export const WEBPACK_1 = `npx webpack-cli init`
 export const WEBPACK_2 = 
@@ -35,7 +37,7 @@ export const BABEL_1 =
 }
 `;
 
-export const INDEX_HTML_1 =
+export const INDEX_HTML_1 = escapeHtml(
 `<!DOCTYPE html>
 <html>
     <head>
@@ -47,7 +49,7 @@ export const INDEX_HTML_1 =
         <script src="dist/main.js"></script>
     </body>
 </html>
-`
+`);
 
 export const PACKAGES_2 = `npm i -D @babel/plugin-syntax-jsx @babel/plugin-transform-react-jsx @babel/preset-env`
 
@@ -66,7 +68,7 @@ export const DIR_1 = `├── index.html
 └── webpack.config.js
 `;
 
-export const DOM_1 = `<ul>
+export const DOM_1 = escapeHtml(`<ul>
   <li key="1">
     One
   </li>
@@ -78,7 +80,7 @@ export const DOM_1 = `<ul>
       <a href="#">Three</a>
     </div>
   </li>
-</ul>`;
+</ul>`);
 
 export const VDOM_1 = `createElement('ul', {}, [
   createElement('li', { key: '1' }, ['One'],

@@ -19,12 +19,13 @@
   &__item {
     margin-top: 10px;
     padding: 10px 15px;
+    white-space: nowrap;
 
     cursor: pointer;
     color: $text-color;
     font-size: 18px;
 
-    &:hover {
+    &.active, &:hover {
       color: white;
       transition: .3s color;
     }

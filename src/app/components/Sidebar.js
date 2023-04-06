@@ -6,10 +6,10 @@ const CHAPTERS = [
   'Introduction',
   'Basic rendering',
   'Basic reconciliation',
-  'Handling key, refs, styles, events and other props',
-  'Handling Functional and Class components',
-  'Adding state to the Class components',
-  'Adding Class components hooks'
+  'Handling props',
+  'Handling components',
+  'Adding state',
+  // 'Adding Class components hooks'
 ];
 
 export const SidebarItem = ({ active, children, onClick }) => {

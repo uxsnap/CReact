@@ -1,8 +1,5 @@
 import { Component } from "../main/component";
-import { render, createElement } from "../main/render";
-
- 
- 
+import { render, createElement } from "../main/render"; 
 
 export const renderRoot = document.getElementById("render");
 
