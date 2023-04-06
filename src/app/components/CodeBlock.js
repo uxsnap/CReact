@@ -1,21 +1,34 @@
 import Prism from "prismjs";
 
 import { createElement } from "../../main/render";
+import { Component } from "../../main/component";
 
-export const CodeBlock = ({ code, langType = "javascript", fileName = '' }) => {
-  const highlightedCode = Prism.highlight(
-    code,
-    Prism.languages.javascript,
-    langType
-  );
+export class CodeBlock extends Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <div className={`code-block ${fileName && 'with-filename'}`}>
-      {fileName && <div className="code-block__file">{fileName}</div>}
+    this.state = {
+      code: ''
+    };
+  }
 
-      <pre className={`language-${langType}`}>
-        <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
-      </pre>
-    </div>
-  );
+  componentDidMount() {
+    requestIdleCallback(() => {
+      Prism.highlightAll();
+    });
+  }
+
+  render() {
+    const { code, langType = "javascript", fileName = '', line = undefined } = this.props;
+
+    return (
+      <div className={`code-block ${fileName && 'with-filename'}`}>
+        {fileName && <div className="code-block__file">{fileName}</div>}
+
+        <pre data-line={line} className={`language-${langType}`}>
+          <code dangerouslySetInnerHTML={{ __html: code }} />
+        </pre>
+      </div>
+    );
+  }
 };

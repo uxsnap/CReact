@@ -7,11 +7,22 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      chapter: 0
+      chapter: 0,
+      ready: false,
     };
 
     this.getPageByChapterNum = this.getPageByChapterNum.bind(this);
     this.onChange = this.onChange.bind(this); 
+  }
+
+  componentDidMount() {
+    const curChapter = localStorage.getItem('__MY_REACT_CHAPTER');
+
+    if (!curChapter) {
+      localStorage.setItem('__MY_REACT_CHAPTER', 0);
+    } else this.setState({ chapter: +curChapter });
+
+    this.setState({ ready: true });
   }
 
   getPageByChapterNum() {
@@ -26,14 +37,18 @@ class App extends Component {
   onChange(chapter) {
     this.setState({
       chapter
-    })
+    });
+
+    localStorage.setItem('__MY_REACT_CHAPTER', chapter);
   }
 
   render() {
+    if (!this.state.ready) return '';
+
     return (
       <div className="main">
         <div className="left">
-          <Sidebar active={this.state.chapter} onChange={this.onChange} />
+          <Sidebar chapter={this.state.chapter} onChange={this.onChange} />
         </div>
         
         <div className="right">

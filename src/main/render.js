@@ -1,5 +1,5 @@
 import { Component } from "./component";
-import { __RERENDER_HELPER, getDerivedStateFromProps, prepareChildren } from '../helpers';
+import { __RERENDER_HELPER, getDerivedStateFromProps } from '../helpers';
 
 export const createElement = (type, props, ...children) => ({
   type,
@@ -10,7 +10,7 @@ export const createElement = (type, props, ...children) => ({
 export const Fragment = (props) => {
   const children = props.children;
   delete props.children;
-  return createElement('__fragment', props, ...children)
+  return createElement('__fragment', props, ...children);
 }
 
 // what we want to render
@@ -32,14 +32,14 @@ export const Fragment = (props) => {
  * When it doesn't have one it appears that the child itself is a parent (root component)
  */
 const mount = (parent) => (dom, removeOutlineTime) => {
-    if (parent) {
-      __RERENDER_HELPER(dom, removeOutlineTime);
+  if (parent) {
+    __RERENDER_HELPER(dom, removeOutlineTime);
 
-      parent.appendChild(dom);
-    }
+    parent.appendChild(dom);
+  }
 
-    return dom;
-  };
+  return dom;
+};
 
 /**
  *
@@ -47,7 +47,7 @@ const mount = (parent) => (dom, removeOutlineTime) => {
  * @param {DomNode} parent
  */
 export const renderComponent = (vdom, parent, removeOutlineTime = 100) => {
-  const props = Object.assign({}, vdom.props, { children: vdom.children });
+  const props = Object.assign({}, vdom.props, { children: vdom.children.flat() });
 
   if (vdom.type.prototype instanceof Component) {
     const component = new vdom.type(props);
@@ -101,18 +101,19 @@ export const render = (vdom, parent, removeOutlineTime = 100) => {
   if (type === "object") {
     if (!vdom.type) return innerMount(document.createTextNode(vdom.toString()), removeOutlineTime);
 
-    
     if (typeof vdom.type === "function") {
       return innerMount(
         renderComponent(vdom, parent, newRemoveOutline), removeOutlineTime
       );
     }
-    const dom = document.createElement(vdom.type);
+
+    const dom = vdom.type === '__fragment' 
+      ? document.createDocumentFragment()
+      : document.createElement(vdom.type);
       
     for (let prop in vdom.props) setProp(dom, prop, vdom.props[prop]);
 
-    const preparedChildren = prepareChildren(vdom.children.flat());
-    for (let child of preparedChildren) {
+    for (let child of vdom.children.flat()) {
       render(child, dom, newRemoveOutline);
     }
     
@@ -166,7 +167,9 @@ export const setProp = (dom, key, value) => {
     return; 
   }
   
-  dom.setAttribute(key, value);
+  if (value !== undefined) {
+    dom.setAttribute(key, value);
+  }
 };
 
 /**

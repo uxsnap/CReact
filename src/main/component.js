@@ -12,10 +12,13 @@ export class Component {
 
   __flush() {
     this.__CALL_QUEUE.forEach(qs => {
-      this.state = Object.assign(this.state, qs);
+      this.state = Object.assign({}, this.state, qs);
     }); 
     this.__CALL_QUEUE = [];
-    reconcile(this.render(), this.__dom);
+    const prevComponent = this.__dom.__instance;
+    this.__dom = reconcile(this.render(), this.__dom);
+    this.__dom.__key = prevComponent.__key;
+    this.__dom.__instance = prevComponent;
   }
 
   setState(newState) {
