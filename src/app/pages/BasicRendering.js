@@ -1,5 +1,5 @@
 import { Fragment, createElement } from "../../main/render";
-import { Title, Paragraph, CodeBlock, CodeWrap } from "../components";
+import { Title, Paragraph, CodeBlock, CodeWrap, SandboxFrame } from "../components";
 import { 
   RENDER_1,
   RENDER_2,
@@ -58,7 +58,7 @@ export const BasicRendering = () => (
     <Paragraph>
       Third condition is handling tags render. Here we also check if the 
       <CodeWrap>vdom</CodeWrap>  is object 
-      (line 19) and if so, we render <CodeWrap>[object Object]</CodeWrap>.
+      (line 19) and if so, we render string representation of the object.
     </Paragraph>
 
     <Paragraph>
@@ -95,5 +95,9 @@ export const BasicRendering = () => (
     <Paragraph>P.S. Don't forget to import <CodeWrap>createElement</CodeWrap>
       in other files to handle JSX!
     </Paragraph>
+
+    <Paragraph>You can check the result on Codesandbox: </Paragraph>
+
+    <SandboxFrame />
   </Fragment>
 );
