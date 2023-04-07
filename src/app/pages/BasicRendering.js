@@ -32,7 +32,7 @@ export const BasicRendering = () => (
 
     <Paragraph>Let's create helper function <CodeWrap>mount</CodeWrap></Paragraph>
 
-    <CodeBlock code={MOUNT_1} fileName="render.js" />
+    <CodeBlock code={MOUNT_1} fileName="main/render.js" />
 
     <Paragraph>It help us handle components without parent component</Paragraph>
 
@@ -40,7 +40,7 @@ export const BasicRendering = () => (
       Then we create <CodeWrap>render</CodeWrap> function: < br />
     </Paragraph>
 
-    <CodeBlock code={RENDER_2} fileName="render.js" line="6,10,18,19,27,30,40" />
+    <CodeBlock code={RENDER_2} fileName="main/render.js" line="6,10,18,19,27,30,40" />
 
     <Paragraph>
       First condition is handling <CodeWrap>undefined</CodeWrap>,
@@ -73,7 +73,7 @@ export const BasicRendering = () => (
       Here's the code of it: 
     </Paragraph>
 
-    <CodeBlock code={SET_PROP_1} fileName="render.js" />
+    <CodeBlock code={SET_PROP_1} fileName="main/render.js" />
 
     <Paragraph>
       Right now this function handles styles, events and basic attributes.  

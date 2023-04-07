@@ -3,4 +3,8 @@
   font-size: 22px;
   color: $text-color;
   line-height: 30px;
+
+  &.no-margin {
+    margin: 0;
+  }
 }
