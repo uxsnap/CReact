@@ -6,7 +6,8 @@ import {
   RECONCILE_1,
   RECONCILE_2,
   HELPER_1,
-  RECONCILE_3
+  RECONCILE_3,
+  RECONCILE_TESTS_1
 } from "../code";
 
 export const BasicReconciliation = () => (
@@ -74,6 +75,10 @@ export const BasicReconciliation = () => (
     ]} />
 
     <Paragraph>Right now our code can correlate the dom to the changes made in the vdom</Paragraph>
+    
+    <Paragraph>Tests for reconciliation: </Paragraph>
+
+    <CodeBlock code={RECONCILE_TESTS_1} />
 
   </Fragment>
 );
