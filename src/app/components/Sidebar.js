@@ -1,14 +1,15 @@
 import { Component } from "../../main/component";
 import { createElement } from "../../main/render";
 import { Container } from './Container';
+import { Icon } from "./Icon";
 
 const CHAPTERS = [
-  'Introduction',
-  'Basic rendering',
-  'Basic reconciliation',
-  'Handling props',
-  'Handling components',
-  'Adding state',
+  { name: 'Introduction', icon: 'pencil' },
+  { name: 'Basic rendering', icon: 'doc' },
+  { name: 'Basic reconciliation', icon: 'cog' },
+  { name: 'Handling props', icon: 'th-list' },
+  { name: 'Handling components', icon: 'code' },
+  { name: 'Adding state', icon: 'progress-2' },
   // 'Adding Class components hooks'
 ];
 
@@ -34,27 +35,33 @@ export class Sidebar extends Component {
   }
 
   onToggle() {
-    this.setState({ open: !this.state.open })
+    this.setState({ open: !this.state.open });
   }
 
   render() {
     const { chapter, onChange } = this.props;
+    const { open } = this.state;
+
+    const activeClass = open ? 'active' : '';
 
     return (
-      <Container className="sidebar">
+      <Container className={`sidebar ${activeClass}`}>
         <ul className="sidebar__list">
           {CHAPTERS.map((item, ind) => (
             <SidebarItem 
               active={chapter === ind} 
-              key={item} 
+              key={item.name} 
               onClick={() => onChange(ind)}
             >
-              {ind}. {item}
+              <Icon name={item.icon} />
+              <span>{item.name}</span>
             </SidebarItem>
           ))}
         </ul>
-
-        <div className="sidebar__toggle">Toggle</div>
+        
+        <div onClick={this.onToggle} className={`sidebar__icon ${activeClass}`}>
+          <Icon name="chevron-double-right" />
+        </div>
       </Container>
     );
   }

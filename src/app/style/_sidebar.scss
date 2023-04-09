@@ -1,6 +1,8 @@
 .sidebar {
-  height: 100%;
-  width: 200px;
+  &.container {
+    width: 50px;
+    padding-left: 0;
+  }
 
   display: flex;
   flex-direction: column;
@@ -8,6 +10,23 @@
 
   background: rgba(0, 0, 0, 1);
   color: white;
+  position: relative;
+  overflow: hidden;
+  transition: all .3s;
+
+  &.active {
+    &.container {
+      width: 220px;
+    }
+
+    .sidebar {
+      &__item {
+        span {
+          visibility: visible;
+        }
+      }
+    }
+  }
 
   &__list {
     li {
@@ -25,6 +44,10 @@
     color: $text-color;
     font-size: 18px;
 
+    span {
+      visibility: hidden;
+    }
+
     &.active, &:hover {
       color: white;
       transition: .3s color;
@@ -32,6 +55,33 @@
 
     &:first-child {
       margin-top: 0;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    font-size: 25px;
+    cursor: pointer;
+
+    i {
+      transition: all .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::before {
+        margin: 0;
+      }
+    }
+
+    &.active {
+      i {
+        transform: rotate(180deg);
+        transform-origin: center;
+      }
     }
   }
 }
