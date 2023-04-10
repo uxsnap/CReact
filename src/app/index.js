@@ -2,6 +2,7 @@ import { Component } from "../main/component";
 import { createElement } from "../main/render";
 import { Introduction, BasicRendering, BasicReconciliation, Props, Components } from './pages'; 
 import { Sidebar } from "./components";
+import { State } from "./pages/State";
 
 class App extends Component {
   constructor() {
@@ -36,6 +37,8 @@ class App extends Component {
       case 3:
         return <Components />;
       case 4:
+        return <State />;
+      case 5:
         return <Props />;
     }
   }
