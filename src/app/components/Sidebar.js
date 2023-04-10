@@ -7,8 +7,8 @@ const CHAPTERS = [
   { name: 'Introduction', icon: 'pencil' },
   { name: 'Basic rendering', icon: 'doc' },
   { name: 'Basic reconciliation', icon: 'cog' },
-  { name: 'Handling props', icon: 'th-list' },
   { name: 'Handling components', icon: 'code' },
+  { name: 'Handling props', icon: 'th-list' },
   { name: 'Adding state', icon: 'progress-2' },
   // 'Adding Class components hooks'
 ];
