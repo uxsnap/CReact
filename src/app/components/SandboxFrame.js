@@ -11,10 +11,11 @@ const LINKS = [
     title: "Basic reconciliation"
   },
   {
-    src: "https://codesandbox.io/embed/props-by81rh?fontsize=14&hidenavigation=1&theme=dark",
-    title: "Handling props"
+    src: "https://codesandbox.io/embed/components-8871e1?fontsize=14&hidenavigation=1&theme=dark",
+    title: "Handling components"
   }
 ];
+
 
 export const SandboxFrame = ({ chapter = 1 }) => (
   <iframe 

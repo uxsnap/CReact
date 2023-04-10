@@ -152,7 +152,7 @@ export const reconcileClassComponent = (vdom, dom, parent, newProps) => {
     if (!dom.__instance.shouldComponentUpdate(newProps, dom.__instance.state)) {
       return dom;
     }
-
+    
     const updated = reconcile(dom.__instance.render(), dom, parent);
     
     dom.__instance.componentDidUpdate(prevProps, dom.__instance.state, snapshot);

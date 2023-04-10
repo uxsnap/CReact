@@ -100,7 +100,7 @@ export const CREATE_REF_1 = `export const createRef = () => {
   return { current: null };
 };`;
 
-export const RECONCILE_4 = `export const reconcile = (vdom, dom, parent = dom.parentNode) => {
+export const RECONCILE_7 = `export const reconcile = (vdom, dom, parent = dom.parentNode) => {
   const innerReplace = replace(parent);
 
   if (dom.nodeType === NODE_TYPES.TEXT) {

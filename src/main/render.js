@@ -107,11 +107,14 @@ export const render = (vdom, parent, removeOutlineTime = 100) => {
       );
     }
 
-    const dom = vdom.type === '__fragment' 
+    const isFragment = vdom.type === "__fragment";
+    const dom = isFragment
       ? document.createDocumentFragment()
       : document.createElement(vdom.type);
-      
-    for (let prop in vdom.props) setProp(dom, prop, vdom.props[prop]);
+
+    if (!isFragment) {
+      for (let prop in vdom.props) setProp(dom, prop, vdom.props[prop]);
+    }
 
     for (let child of vdom.children.flat()) {
       render(child, dom, newRemoveOutline);
