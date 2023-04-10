@@ -25,12 +25,12 @@ export const BasicReconciliation = () => (
 
     <Paragraph>Let's again start with the helper function to replace old nodes and constant to check node types</Paragraph>
 
-    <CodeBlock code={RECONCILE_1} fileName="reconcile.js" />
+    <CodeBlock code={RECONCILE_1} fileName="main/reconcile.js" />
     <CodeBlock code={HELPER_1} fileName="helpers/constants.js" />
 
     <Paragraph>And create our first iteration of the <CodeWrap>reconcile</CodeWrap> function</Paragraph>
 
-    <CodeBlock code={RECONCILE_2} fileName="reconcile.js"></CodeBlock>
+    <CodeBlock code={RECONCILE_2} fileName="main/reconcile.js"></CodeBlock>
 
     <Paragraph>As you can see, we're checking if the <CodeWrap>textContent</CodeWrap> of the nodes
       is the same. Then rerender if it's not.
@@ -80,5 +80,6 @@ export const BasicReconciliation = () => (
 
     <CodeBlock code={RECONCILE_TESTS_1} />
 
+    <SandboxFrame chapter={2}/>
   </Fragment>
 );

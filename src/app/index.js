@@ -1,6 +1,6 @@
 import { Component } from "../main/component";
 import { createElement } from "../main/render";
-import { Introduction, BasicRendering, BasicReconciliation } from './pages'; 
+import { Introduction, BasicRendering, BasicReconciliation, Props } from './pages'; 
 import { Sidebar } from "./components";
 
 class App extends Component {
@@ -33,6 +33,8 @@ class App extends Component {
         return <BasicRendering />;
       case 2:
         return <BasicReconciliation />;
+      case 3:
+        return <Props />;
     }
   }
 
