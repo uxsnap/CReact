@@ -5,6 +5,14 @@ const LINKS = [
   {
     src: "https://codesandbox.io/embed/basic-rendering-721pjg?fontsize=14&hidenavigation=1&theme=dark",
     title: "Basic rendering"
+  },
+  {
+    src: "https://codesandbox.io/embed/basic-reconciliation-qeo3w1?fontsize=14&hidenavigation=1&theme=dark",
+    title: "Basic reconciliation"
+  },
+  {
+    src: "https://codesandbox.io/embed/props-by81rh?fontsize=14&hidenavigation=1&theme=dark",
+    title: "Handling props"
   }
 ];
 

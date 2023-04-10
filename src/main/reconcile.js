@@ -77,9 +77,11 @@ export const reconcile = (vdom, dom, parent = dom.parentNode) => {
       Array
         .from(dom.childNodes)
         .flat()
-        .forEach((child, ind) => 
-          curChildNodes[child.__key || `___key__${ind}__`] = child
-        );
+        .forEach((child, ind) => {
+          const key = child && child.__key ? child.__key : `___key__${ind}__`;
+          
+          curChildNodes[key] = child
+        });
 
       for (const attr of dom.getAttributeNames()) dom.removeAttribute(attr);
       for (const event in dom.__eventHandlers || {}) {
@@ -90,7 +92,8 @@ export const reconcile = (vdom, dom, parent = dom.parentNode) => {
       for (const prop in newProps) setProp(dom, prop, newProps[prop]);
 
       vdom.children.flat().forEach((child, ind) => {
-        let key = (child && child.props || {}).key || `___key__${ind}__`;
+        const props = child && child.props ? child.props : {};
+        let key = props.key || `___key__${ind}__`;
         __LOG(curChildNodes, key);
 
         if (key in curChildNodes) {
