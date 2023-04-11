@@ -48,10 +48,6 @@ export const PURE_COMPONENT_1 = `import { __SHALLOW_COMPARE } from "../helpers";
 import { Component } from "./component";
 
 export class PureComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         return __SHALLOW_COMPARE(this.props, nextProps) && __SHALLOW_COMPARE(this.state, nextState);
     }
@@ -86,11 +82,11 @@ export const GET_DERIVED_STATE_1 = `export const getDerivedStateFromProps = (vdo
   if (newState !== null) component.setState(newState);
 };`
 
-export const LIFECYCLE_1 = `for (let key in curChildNodes) {
-  if (curChildNodes[key].__instance) {
-    curChildNodes[key].__instance.componentWillUnmount();
+export const LIFECYCLE_1 = `for (let ind in curChildNodes) {
+  if (curChildNodes[ind].__instance) {
+    curChildNodes[ind].__instance.componentWillUnmount();
   }
-  curChildNodes[key].remove();
+  curChildNodes[ind].remove();
 }
 
 return dom;`
@@ -120,3 +116,9 @@ export const RECONCILE_8 = `export const reconcileClassComponent = (vdom, dom, p
     return render(vdom, parent);
   }
 };`;
+
+export const SET_PROP_5 = `export const setProp = (dom, key, value) => {
+  if (key === "value") {
+    dom[key] = value;
+    return;
+  }`;

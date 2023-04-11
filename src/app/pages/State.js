@@ -7,7 +7,8 @@ import {
   RENDER_COMPONENT_2,
   GET_DERIVED_STATE_1,
   LIFECYCLE_1,
-  RECONCILE_8
+  RECONCILE_8,
+  SET_PROP_5
 } from "../code";
 
 export const State = () => (
@@ -16,7 +17,7 @@ export const State = () => (
 
     <Paragraph>
       In this chapter we will add <CodeWrap>state</CodeWrap> to our components and 
-      <CodeWrap>lifecycle hooks</CodeWrap> so we can finally write yourself a <CodeWrap>Todo</CodeWrap>!.
+      <CodeWrap>lifecycle hooks</CodeWrap> so we can finally write yourself a <CodeWrap>Todo</CodeWrap>!
     </Paragraph>
 
 
@@ -112,9 +113,21 @@ export const State = () => (
       </Paragraph>,
     ]}/>
 
+    <Paragraph>
+      Also, we need to update <CodeWrap>setProp</CodeWrap> so the <CodeWrap>input</CodeWrap> components can handle <CodeWrap>value</CodeWrap>
+      properly.
+    </Paragraph>
+
+    <CodeBlock code={SET_PROP_5} fileName="main/render.js" />
+
     <Paragraph>With all the changes, the <CodeWrap>Todo</CodeWrap> can finally be created.</Paragraph>
 
+    <SandboxFrame chapter={4} />
 
-    {/* <SandboxFrame chapter={4} /> */}
+    <Paragraph>
+      P.S. There are still props that our components can't handle right now and some bugs left to fix.
+      We'll do it in the next chapter. <CodeWrap>onChange</CodeWrap> is working fine but <CodeWrap>React</CodeWrap>
+      tend to handle events from it differently. We'll correct code to the desired behavior in the next chapter.
+    </Paragraph>
   </Fragment>
 );
