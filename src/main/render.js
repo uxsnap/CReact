@@ -140,7 +140,7 @@ export const setProp = (dom, key, value) => {
     return;
   }
 
-  if (['checked', 'className'].includes(key)) {
+  if (['checked', 'className', 'value'].includes(key)) {
     dom[key] = value;
     return;
   }
@@ -169,7 +169,7 @@ export const setProp = (dom, key, value) => {
     setEventListener(dom, key, value);
     return; 
   }
-  
+
   if (value !== undefined) {
     dom.setAttribute(key, value);
   }
