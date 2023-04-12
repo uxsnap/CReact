@@ -140,7 +140,13 @@ export const setProp = (dom, key, value) => {
     return;
   }
 
-  if (['checked', 'className', 'value'].includes(key)) {
+  if (key === 'value') {
+    dom[key] = value;
+    dom.setAttribute(key, value);
+    return;
+  }
+
+  if (['checked', 'className'].includes(key)) {
     dom[key] = value;
     return;
   }
