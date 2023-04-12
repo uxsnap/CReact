@@ -76,6 +76,6 @@ export const Components = () => (
 
     <Paragraph>With all that, we can now update our tests of <CodeWrap>render</CodeWrap> and <CodeWrap>reconciliation</CodeWrap>.</Paragraph>
 
-    <SandboxFrame chapter={3} />
+    <SandboxFrame n={3} />
   </Fragment>
 );

@@ -1,4 +1,4 @@
-export const SET_PROP_4 = `export const setProp = (dom, key, value) => {
+export const SET_PROP_5 = `export const setProp = (dom, key, value) => {
   if (key === 'dangerouslySetInnerHTML' && !!value && !!value.__html) {
     dom.innerHTML = value.__html;
     return;
@@ -39,9 +39,15 @@ export const SET_PROP_4 = `export const setProp = (dom, key, value) => {
   }
 };`
 
-export const SET_PROP_2 = `export const setProp = (dom, key, value) => {
+export const SET_PROP_3 = `export const setProp = (dom, key, value) => {
   if (key === 'dangerouslySetInnerHTML' && !!value && !!value.__html) {
     dom.innerHTML = value.__html;
+    return;
+  }
+
+  if (key === 'value') {
+    dom[key] = value;
+    dom.setAttribute(key, value);
     return;
   }
 
@@ -60,13 +66,19 @@ export const SET_PROP_2 = `export const setProp = (dom, key, value) => {
   }
 };`
 
-export const SET_PROP_3 = `export const setProp = (dom, key, value) => {
+export const SET_PROP_4 = `export const setProp = (dom, key, value) => {
   if (key === 'dangerouslySetInnerHTML' && !!value && !!value.__html) {
     dom.innerHTML = value.__html;
     return;
   }
 
-  if (['checked', 'className'].includes(key)) {
+  if (key === 'value') {
+    dom[key] = value;
+    dom.setAttribute(key, value);
+    return;
+  }
+
+  if (key === 'className') {
     dom[key] = value;
     return;
   }

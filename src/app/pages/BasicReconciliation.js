@@ -80,6 +80,6 @@ export const BasicReconciliation = () => (
 
     <CodeBlock code={RECONCILE_TESTS_1} />
 
-    <SandboxFrame chapter={2}/>
+    <SandboxFrame n={2}/>
   </Fragment>
 );
