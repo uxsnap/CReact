@@ -102,7 +102,7 @@ export const reconcile = (vdom, dom, parent = dom.parentNode) => {
           delete curChildNodes[key];
         }
         else {
-          dom.insertBefore(render(child, dom), dom.childNodes[ind]);
+          dom.insertBefore(render(child, dom), dom.childNodes[key]);
           __LOG("INSERTED NEW CHILD TO DOM");
         }
       });
