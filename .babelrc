@@ -7,13 +7,6 @@
       {
         "pragma": "createElement"
       }
-    ],
-    [
-      "prismjs", {
-        "languages": ["javascript", "css", "html", "markup"],
-        "plugins": ["line-numbers", "copy-to-clipboard", "treeview", "line-highlight"],
-        "css": true
-      }
     ]
   ],
   "presets": [
