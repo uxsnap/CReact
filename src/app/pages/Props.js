@@ -1,9 +1,9 @@
 import { Fragment, createElement } from "../../main/render";
 import { Title, Paragraph, CodeBlock, CodeWrap, SandboxFrame } from "../components";
 import { 
-  SET_PROP_2,
   SET_PROP_3,
   SET_PROP_4,
+  SET_PROP_5,
   CREATE_REF_1,
   RECONCILE_4
 } from "../code";
@@ -13,7 +13,7 @@ export const Props = () => (
     <Title>Handling props</Title>
 
     <Paragraph>
-      In this chapter we will update <CodeWrap>setProp</CodeWrap> function
+      In this chapter we will update our code
       to handle <CodeWrap>keys</CodeWrap>, <CodeWrap>refs</CodeWrap>,
        and e.t.c
     </Paragraph>
@@ -22,15 +22,19 @@ export const Props = () => (
       Let's start with infamous <CodeWrap>dangerouslySetInnerHTML</CodeWrap>
     </Paragraph>
 
-    <CodeBlock code={SET_PROP_2} fileName="main/render.js" line="2-5" />
+    <CodeBlock code={SET_PROP_3} fileName="main/render.js" line="2-5" />
 
     <Paragraph>Simple stuff: we just need to validate <CodeWrap>__html</CodeWrap> field and assign it
     to <CodeWrap>innerHTML</CodeWrap></Paragraph>
 
-    <Paragraph>Then, let's add  specific props that needs to be assigned to <CodeWrap>dom</CodeWrap>object. 
-    Also, let's also add <CodeWrap>ref</CodeWrap> - callback and object versions.</Paragraph>
+    <SandboxFrame n={5} />
 
-    <CodeBlock code={SET_PROP_3} fileName="main/render.js" line="7-20"/>
+    <Paragraph>Then, let's add  specific props to be assigned to <CodeWrap>dom</CodeWrap>object. 
+    Also, let's add <CodeWrap>ref</CodeWrap> - both callback and object versions.</Paragraph>
+
+    <CodeBlock code={SET_PROP_4} fileName="main/render.js" line="13-26"/>
+
+    <SandboxFrame n={6} />
 
     <Paragraph>And don't forget to create <CodeWrap>createRef</CodeWrap> function.</Paragraph>
 
@@ -40,7 +44,7 @@ export const Props = () => (
     main purpose is to figure out the reconciliation of the children of the component. So we also update
     <CodeWrap>reconcile</CodeWrap> function.</Paragraph>
 
-    <CodeBlock code={SET_PROP_4} fileName="main/render.js" line="22-25"/>
+    <CodeBlock code={SET_PROP_5} fileName="main/render.js" line="22-25"/>
 
     <Paragraph>We also need to update <CodeWrap>reconcile</CodeWrap>.</Paragraph>
 
@@ -48,6 +52,6 @@ export const Props = () => (
 
     <Paragraph>Now our code supports specific props.</Paragraph>
 
-    <SandboxFrame chapter={3} />
+    <SandboxFrame n={3} />
   </Fragment>
 );

@@ -117,7 +117,7 @@ export const RECONCILE_8 = `export const reconcileClassComponent = (vdom, dom, p
   }
 };`;
 
-export const SET_PROP_5 = `export const setProp = (dom, key, value) => {
+export const SET_PROP_2 = `export const setProp = (dom, key, value) => {
   if (key === "value") {
     dom[key] = value;
     return;

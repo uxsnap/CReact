@@ -17,13 +17,21 @@ const LINKS = [
   { 
     src: "https://codesandbox.io/embed/state-tn10ll?fontsize=14&hidenavigation=1&theme=dark",
     title: "Adding state"
+  },
+  {
+    src: "https://codesandbox.io/embed/props-1-g0o94x?fontsize=14&hidenavigation=1&theme=dark",
+    title: "props_1"
+  },
+  {
+    src: "https://codesandbox.io/embed/props-2-uotydb?fontsize=14&hidenavigation=1&theme=dark",
+    title: "props_2"
   }
 ];
 
 
-export const SandboxFrame = ({ chapter = 1 }) => (
+export const SandboxFrame = ({ n = 1 }) => (
   <iframe 
-    {...LINKS[chapter]}
+    {...LINKS[n]}
     style={{ width: "100%", height: "500px" }}
     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
   />
