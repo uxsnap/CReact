@@ -88,6 +88,7 @@ export const renderComponent = (vdom, parent) => {
 export const setProp = (dom, key, value) => {
   if (key === "value") {
     dom[key] = value;
+    dom.setAttribute(key, value);
     return;
   }
 

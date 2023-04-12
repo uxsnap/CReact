@@ -1,8 +1,5 @@
 import { createElement, render } from "./main/render";
 import { Component } from "./main/component";
-import React from "react";
-
-React.createElement = createElement;
 
 class TodoItem extends Component {
   constructor(props) {
@@ -47,6 +44,10 @@ class TodoList extends Component {
 }
 
 class Input extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     const { type, value, onChange, id, title } = this.props;
 
