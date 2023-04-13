@@ -19,12 +19,16 @@ const LINKS = [
     title: "Adding state"
   },
   {
-    src: "https://codesandbox.io/embed/props-1-g0o94x?fontsize=14&hidenavigation=1&theme=dark",
+    src: "https://codesandbox.io/embed/props-1-7p7c7g?fontsize=14&hidenavigation=1&theme=dark",
     title: "props_1"
   },
   {
-    src: "https://codesandbox.io/embed/props-2-uotydb?fontsize=14&hidenavigation=1&theme=dark",
+    src: "https://codesandbox.io/embed/props-2-encyc7?fontsize=14&hidenavigation=1&theme=dark",
     title: "props_2"
+  },
+  {
+    src: "https://codesandbox.io/embed/props-3-y14vdb?fontsize=14&hidenavigation=1&theme=dark",
+    title: "props_3"
   }
 ];
 

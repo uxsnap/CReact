@@ -34,7 +34,10 @@ class TodoList extends Component {
         return (
             <ul className="todoList">
                 {this.props.items.map(item => (
-                    <TodoItem key={item} onClick={() => this.props.onRemove(item)}>{item}</TodoItem>    
+                    <TodoItem key={item} onClick={(e) => {
+                        this.props.onRemove(item);
+                        e.stopPropagation();
+                    }}>{item}</TodoItem>    
                 ))}  
             </ul>
         );
@@ -96,7 +99,13 @@ export class Todo extends Component {
     render() {
         return (
             <div>
-                <Input type="text" id="text" title="Add item to todo:" value={this.state.name} onChange={this.onNameChange}/>
+                <Input 
+                    id="text" 
+                    title="Add item to todo:" 
+                    type="text" 
+                    value={this.state.name} 
+                    onChange={this.onNameChange}
+                />
                 <TodoList items={this.state.items} onRemove={this.removeItem}/>
                 <button onClick={this.addItem}>Add item</button>
             </div>
