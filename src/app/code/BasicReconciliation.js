@@ -1,10 +1,10 @@
 import { escapeHtml } from "../utils";
 
-export const SCHEMA_1 = `The schema for it:
+export const SCHEMA_1 = `Schema:
 Text -> Text == rerender if differ 
 Text -> Any == full rerender`
 
-export const SCHEMA_2 = `The schema:
+export const SCHEMA_2 = `Schema:
 Tag -> Same Tag == reconciliation of props and children
 Tag -> Another Tag or Other any type == full rerender
 Tag -> Something Else == full rerender`;
