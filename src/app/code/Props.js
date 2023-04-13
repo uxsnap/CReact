@@ -19,7 +19,7 @@ export const SET_PROP_5 = `export const setProp = (dom, key, value) => {
     return;
   }
 
-  if (key === 'ref') {
+  if (key === 'ref' && value) {
     if (typeof value === "function") {
       value(dom);
       return;

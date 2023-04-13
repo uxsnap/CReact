@@ -1,7 +1,8 @@
 import { Component } from "../main/component";
+import { createRef } from "../main/ref";
 import { createElement } from "../main/render";
 import { Introduction, BasicRendering, BasicReconciliation, Props, Components } from './pages'; 
-import { Sidebar } from "./components";
+import { Container, Sidebar } from "./components";
 import { State } from "./pages/State";
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
 
     this.getPageByChapterNum = this.getPageByChapterNum.bind(this);
     this.onChange = this.onChange.bind(this); 
+    this.ref = createRef();
   }
 
   componentDidMount() {
@@ -48,6 +50,8 @@ class App extends Component {
       chapter
     });
 
+    this.ref.current.scrollTo(0, 0);
+
     localStorage.setItem('__MY_REACT_CHAPTER', chapter);
   }
 
@@ -61,9 +65,9 @@ class App extends Component {
         </div>
         
         <div className="right">
-          <div className="container">
+          <Container ref={this.ref}>
             {this.getPageByChapterNum(this.state.chapter)}
-          </div>
+          </Container>
         </div>
       </div>
     );
