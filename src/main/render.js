@@ -80,7 +80,7 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 100) => {
  * All the creations of the elements will go
  * in render function
  */
-export const render = (vdom, parent, removeOutlineTime = 100) => {
+export const render = (vdom, parent, removeOutlineTime = undefined) => {
   const type = typeof vdom;
   const newRemoveOutline = removeOutlineTime ? removeOutlineTime + 100 : 0;
   
@@ -95,15 +95,15 @@ export const render = (vdom, parent, removeOutlineTime = 100) => {
       type === "boolean" && !vdom ? "" : vdom
     );
 
-    return innerMount(text, removeOutlineTime);
+    return innerMount(text, newRemoveOutline);
   }
 
   if (type === "object") {
-    if (!vdom.type) return innerMount(document.createTextNode(vdom.toString()), removeOutlineTime);
+    if (!vdom.type) return innerMount(document.createTextNode(vdom.toString()), newRemoveOutline);
 
     if (typeof vdom.type === "function") {
       return innerMount(
-        renderComponent(vdom, parent, newRemoveOutline), removeOutlineTime
+        renderComponent(vdom, parent, newRemoveOutline), newRemoveOutline
       );
     }
 
@@ -120,7 +120,7 @@ export const render = (vdom, parent, removeOutlineTime = 100) => {
       render(child, dom, newRemoveOutline);
     }
     
-    return innerMount(dom, removeOutlineTime);
+    return innerMount(dom, newRemoveOutline);
   }
 
   return document.createTextNode("Error");
