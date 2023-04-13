@@ -17,7 +17,6 @@ export class Component {
     this.__CALL_QUEUE = [];
     const prevComponent = this.__dom.__instance;
     this.__dom = reconcile(this.render(), this.__dom);
-    this.__dom.__key = prevComponent.__key;
     this.__dom.__instance = prevComponent;
   }
 

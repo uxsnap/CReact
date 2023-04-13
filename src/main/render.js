@@ -189,7 +189,11 @@ export const setProp = (dom, key, value) => {
  * Helper function to set event listener
  */
 const setEventListener = (dom, key, value) => {
-  const event = key.slice(2,).toLowerCase();
+  let event = key.slice(2,).toLowerCase();
+
+  if (event === 'change') {
+    event = 'input';
+  }
   
   dom.__eventHandlers = dom.__eventHandlers || {};
   dom.__eventHandlers[event] = value;

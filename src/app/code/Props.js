@@ -4,7 +4,17 @@ export const SET_PROP_5 = `export const setProp = (dom, key, value) => {
     return;
   }
 
-  if (['checked', 'className'].includes(key)) {
+  if (key === 'key') {
+    dom.__key = value;
+  }
+ 
+  if (key === 'value') {
+    dom[key] = value;
+    dom.setAttribute(key, value);
+    return;
+  }
+
+  if (key === 'className') {
     dom[key] = value;
     return;
   }
@@ -17,11 +27,6 @@ export const SET_PROP_5 = `export const setProp = (dom, key, value) => {
 
     value.current = dom;
     return;
-  }
-
-  if (key === "key") {
-    dom.__key = value;
-    return; 
   }
 
   if (key === "style") {
@@ -112,8 +117,40 @@ export const CREATE_REF_1 = `export const createRef = () => {
   return { current: null };
 };`;
 
-export const RECONCILE_7 = `export const reconcile = (vdom, dom, parent = dom.parentNode) => {
+
+
+export const RENDER_4 = `export const renderComponent = (vdom, parent, removeOutlineTime = 100) => {
+  const props = Object.assign({}, vdom.props, { children: vdom.children.flat() });
+
+  if (vdom.type.prototype instanceof Component) {
+    const component = new vdom.type(props);
+
+    getDerivedStateFromProps(vdom, component);
+
+    component.__dom = render(component.render(), parent, removeOutlineTime);
+    component.__dom.__key = (props && props.key) || undefined;
+    component.__dom.__instance = component;
+    
+    component.componentDidMount();
+
+    return component.__dom;
+  } else {
+    const component = vdom.type(props);
+
+    if (component.props) {
+      component.props.key = (props && props.key) || undefined;
+    }
+
+    return render(component, parent, removeOutlineTime);
+  }
+};`;
+
+export const RECONCILE_9 = `export const reconcile = (vdom, dom, parent = dom.parentNode) => {
   const innerReplace = replace(parent);
+
+  if (typeof vdom === "object" && typeof vdom.type === "function") {
+    return reconcileComponent(vdom, dom, parent);
+  }
 
   if (dom.nodeType === NODE_TYPES.TEXT) {
     if (vdom != null && vdom.toString() === dom.textContent) {
@@ -162,20 +199,35 @@ export const RECONCILE_7 = `export const reconcile = (vdom, dom, parent = dom.pa
       vdom.children.flat().forEach((child, ind) => {
         const props = child && child.props ? child.props : {};
         let key = props.key || \`___key__\${ind}__\`;
-        
+
         if (key in curChildNodes) {
           reconcile(child, curChildNodes[key], dom);
           delete curChildNodes[key];
         } else {
-          dom.insertBefore(render(child, dom), dom.childNodes[ind]);
+          dom.insertBefore(render(child, dom), dom.childNodes[key]);
         }
       });
 
       for (let key in curChildNodes) {
+        if (curChildNodes[key].__instance) {
+          curChildNodes[key].__instance.componentWillUnmount();
+        }
         curChildNodes[key].remove();
       }
 
       return dom;
     }
   }
-};`
+};`;
+
+export const SET_EVENT_LISTENER_1 = `const setEventListener = (dom, key, value) => {
+  let event = key.slice(2,).toLowerCase();
+
+  if (event === 'change') {
+    event = 'input';
+  }
+  
+  dom.__eventHandlers = dom.__eventHandlers || {};
+  dom.__eventHandlers[event] = value;
+  dom.addEventListener(event, dom.__eventHandlers[event]);
+};`;

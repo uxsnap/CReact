@@ -1,11 +1,13 @@
 import { Fragment, createElement } from "../../main/render";
-import { Title, Paragraph, CodeBlock, CodeWrap, SandboxFrame } from "../components";
+import { Title, Paragraph, CodeBlock, CodeWrap, SandboxFrame, List } from "../components";
 import { 
   SET_PROP_3,
   SET_PROP_4,
   SET_PROP_5,
   CREATE_REF_1,
-  RECONCILE_4
+  RENDER_4,
+  RECONCILE_9,
+  SET_EVENT_LISTENER_1
 } from "../code";
 
 export const Props = () => (
@@ -44,14 +46,35 @@ export const Props = () => (
     main purpose is to figure out the reconciliation of the children of the component. So we also update
     <CodeWrap>reconcile</CodeWrap> function.</Paragraph>
 
-    <CodeBlock code={SET_PROP_5} fileName="main/render.js" line="22-25"/>
+    <CodeBlock code={SET_PROP_5} fileName="main/render.js" line="7-9"/>
 
-    <Paragraph>We also need to update <CodeWrap>reconcile</CodeWrap>.</Paragraph>
+    <Paragraph>We also need to update other functions to handle keys</Paragraph>
 
-    <CodeBlock code={RECONCILE_4} fileName="main/reconcile.js" line="35,48-58,60-62"/>
+    <CodeBlock code={RENDER_4} fileName="main/render.js" line="10,19-21"/>
+    <CodeBlock code={RECONCILE_9} fileName="main/reconcile.js" line="39-41,52-62,64-69"/>
 
-    <Paragraph>Now our code supports specific props.</Paragraph>
+    <List items={[
+      <Paragraph>
+        On the lines <CodeWrap>39-41</CodeWrap> child in the dom is stored in the <CodeWrap>curChildNodes</CodeWrap> by the key prop.
+      </Paragraph>,
+      <Paragraph>
+        On the lines <CodeWrap>52-62</CodeWrap> we're checking if the new child is in the <CodeWrap>curChildNodes</CodeWrap>. If it's not, we render it, 
+        otherwise - updating it
+      </Paragraph>,
+      <Paragraph>
+        On the lines <CodeWrap>64-69</CodeWrap> unchecked children are removed from the dom.
+      </Paragraph>,
+    ]}/>
 
-    <SandboxFrame n={3} />
+    <Paragraph>
+      Also, <CodeWrap>React</CodeWrap> tends to treat <CodeWrap>onChange</CodeWrap> differently - 
+      as an <CodeWrap>input</CodeWrap> event.
+    </Paragraph>
+
+    <CodeBlock code={SET_EVENT_LISTENER_1} fileName="main/render.js"/>
+
+    <SandboxFrame n={7} />
+
+    <Paragraph>Now our code supports specific props and Todo works as expected.</Paragraph>
   </Fragment>
 );
