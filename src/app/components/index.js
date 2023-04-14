@@ -7,3 +7,4 @@ export { CodeWrap } from './CodeWrap';
 export { List } from './List';
 export { SandboxFrame } from './SandboxFrame';
 export { Icon } from './Icon';
+export { LangSwitch } from './LangSwitch';
