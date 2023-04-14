@@ -88,10 +88,11 @@ export class Todo extends Component {
     }
 
     addItem() {
-        if (!this.state.name.length) return;
+        const name = this.state.name.trim();
+        if (!name.length) return;
 
         this.setState({
-            items: this.state.items.concat(this.state.name),
+            items: this.state.items.concat(name),
             name: '',
         });
     }
