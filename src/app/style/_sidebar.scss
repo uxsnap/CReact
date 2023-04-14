@@ -13,6 +13,7 @@
   position: relative;
   overflow: hidden;
   transition: all .3s;
+  font-family: $main-font;
 
   &.active {
     &.container {
@@ -46,6 +47,7 @@
 
     span {
       visibility: hidden;
+      padding-left: 4px;
     }
 
     &.active, &:hover {
