@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'oxygenbold';
+    src: url('../font/oxygen-bold-webfont.woff2') format('woff2'),
+         url('../font/oxygen-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'oxygenlight';
+    src: url('../font/oxygen-light-webfont.woff2') format('woff2'),
+         url('../font/oxygen-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'oxygenregular';
+    src: url('../font/oxygen-regular-webfont.woff2') format('woff2'),
+         url('../font/oxygen-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
