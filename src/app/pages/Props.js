@@ -34,7 +34,16 @@ export const Props = () => (
     <Paragraph>Then, let's add  specific props to be assigned to<CodeWrap>dom</CodeWrap>object. 
     Also, let's add the<CodeWrap>ref</CodeWrap>prop - both callback and object versions.</Paragraph>
 
-    <CodeBlock code={SET_PROP_4} fileName="main/render.js" line="13-26"/>
+    <CodeBlock code={SET_PROP_4} fileName="main/render.js" line="13-16,18-26"/>
+
+    <List items={[
+      <Paragraph>On the lines<CodeWrap>13-16</CodeWrap>, we add a<CodeWrap>className</CodeWrap>
+      prop as a field of a dom object because there are no attributes like<CodeWrap>className</CodeWrap>
+      so it must be handled differently.</Paragraph>,
+      <Paragraph>On the lines<CodeWrap>18-26</CodeWrap>, we add a<CodeWrap>ref</CodeWrap>
+      prop. First, we check if the<CodeWrap>value</CodeWrap> is a<CodeWrap>function</CodeWrap>and 
+      we call it if it does. Otherwise, we assign dom to the<CodeWrap>current</CodeWrap>field.</Paragraph>
+    ]}/>
 
     <SandboxFrame n={6} />
 
