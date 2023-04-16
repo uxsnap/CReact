@@ -16,70 +16,70 @@ import {
 
 export const Introduction = ({ lang }) => (
   <Fragment>
-    <Title>{lang.title}</Title>
+    <Title>{lang[0]}</Title>
 
     <Paragraph>
-      {lang.hey} -<CodeWrap>React</CodeWrap>.
+      {lang[1]} -<CodeWrap>React</CodeWrap>.
     </Paragraph>
 
     <Paragraph>
-      {lang.doYouWant}
+      {lang[2]}
     </Paragraph>
 
     <Paragraph>
-      {lang.explanation}
+      {lang[3]}
     </Paragraph>
 
     <Paragraph>
-      {lang.firstly}
+      {lang[4]}
     </Paragraph>
 
     <CodeBlock code={PACKAGES_1} />
 
-    <Paragraph>{lang.webpackCli}</Paragraph>
+    <Paragraph>{lang[5]}</Paragraph>
 
     <CodeBlock code={WEBPACK_1} />
     <CodeBlock code={WEBPACK_2} />
 
-    <Paragraph>{lang.packagesJSX} </Paragraph>
+    <Paragraph>{lang[6]} </Paragraph>
 
     <CodeBlock code={PACKAGES_2} />
 
-    <Paragraph>{lang.babelRc}</Paragraph>
+    <Paragraph>{lang[7]}</Paragraph>
 
     <CodeBlock code={BABEL_1} />
 
-    <Paragraph>{lang.indexHTML}</Paragraph>
+    <Paragraph>{lang[8]}</Paragraph>
 
     <CodeBlock code={INDEX_HTML_1} langType="html" fileName="index.html" />
 
-    <Paragraph>{lang.projectStructure}</Paragraph>
+    <Paragraph>{lang[9]}</Paragraph>
 
     <CodeBlock code={DIR_1} langType="treeview" />
 
     <Paragraph>
-      {lang.mainDir}
+      {lang[10]}
     </Paragraph>
 
     <CodeBlock code={CREATE_ELEMENT} fileName="main/render.js"  />
 
     <Paragraph>
-     {lang.createElement}
+     {lang[11]}
     </Paragraph>
 
     <CodeBlock code={DOM_1} langType="html" />
 
     <Paragraph>
-      {lang.willBeTransformed}
+      {lang[12]}
     </Paragraph>
     <CodeBlock code={VDOM_1} />
 
     <Paragraph>
-      {lang.projectStructure}
+      {lang[13]}
     </Paragraph>
     
     <CodeBlock code={DIR_2} langType="treeview"/>
 
-    <Paragraph>{lang.thatsIt}</Paragraph>
+    <Paragraph>{lang[14]}</Paragraph>
   </Fragment>
 );
