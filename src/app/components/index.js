@@ -8,3 +8,4 @@ export { List } from './List';
 export { SandboxFrame } from './SandboxFrame';
 export { Icon } from './Icon';
 export { LangSwitch } from './LangSwitch';
+export { IconLink } from './IconLink';

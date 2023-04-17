@@ -1,5 +1,6 @@
 import { Fragment, createElement } from "../../main/render";
-import { Title, Paragraph, CodeBlock, CodeWrap, Icon, Container } from "../components";
+import { Title, Paragraph, CodeBlock, CodeWrap, Icon, Container, IconLink } from "../components";
+import { links } from "../utils";
 
 
 export const StartScreen = ({ onChange, lang }) => {
@@ -12,6 +13,12 @@ export const StartScreen = ({ onChange, lang }) => {
       <Paragraph>{lang[1]}</Paragraph>
 
       <button className="start-screen__button" onClick={() => onChange(1)}>{lang[2]}</button>
+
+      <div className="start-screen__links">
+        {links.map(link => (
+          <IconLink {...link} key={link.href} />
+        ))}
+      </div>
     </Container>
   );
 };
