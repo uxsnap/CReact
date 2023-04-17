@@ -3,6 +3,11 @@ import { CodeWrap, Paragraph } from "../components";
 
 export default [
   [
+    "CReact",
+    "Create your own frontend library from scratch!",
+    "Get stared"
+  ],
+  [
     "Introduction",
     
     "Hey! You've probably become accustomed to the most popular frontend library",
@@ -151,7 +156,7 @@ export default [
     </Fragment>
   ],
   [
-    "Basic reconciliation", 
+    "Reconciliation", 
 
     <Fragment>
       Our next step is to write a function to update the<CodeWrap>DOM</CodeWrap> reflecting on the changes in the<CodeWrap>VDOM</CodeWrap>
@@ -220,7 +225,7 @@ export default [
     "Codesandbox:",
   ],
   [
-    "Handling components",
+    "Components",
 
     <Fragment>
       In this chapter, we will learn how to handle components in the <CodeWrap>JSX</CodeWrap>.
@@ -275,7 +280,7 @@ export default [
     <Fragment>Codesandbox:</Fragment>
   ],
   [
-    "Adding state",
+    "State",
 
     <Fragment>
       In this chapter, we will add<CodeWrap>state</CodeWrap> and 

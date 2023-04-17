@@ -11,6 +11,7 @@
 @import "_code-wrap";
 @import "_list";
 @import "_lang-switch";
+@import "_start-screen";
 
 * { 
   box-sizing: border-box;
@@ -29,7 +30,7 @@ ul {
   margin: 0;
 }
 
-.main, #app, .container {
+.main, #app, .container, .app {
   height: 100%;
   width: auto;
 }

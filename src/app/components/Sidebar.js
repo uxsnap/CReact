@@ -3,15 +3,26 @@ import { createElement } from "../../main/render";
 import { Container } from './Container';
 import { Icon } from "./Icon";
 
-const CHAPTERS = [
-  { name: 'Introduction', icon: 'pencil' },
-  { name: 'Basic rendering', icon: 'doc' },
-  { name: 'Basic reconciliation', icon: 'cog' },
-  { name: 'Handling components', icon: 'code' },
-  { name: 'Adding state', icon: 'progress-2' },
-  { name: 'Handling props', icon: 'th-list' },
-  // 'Adding Class components hooks'
-];
+const CHAPTERS = {
+  en: [
+    { name: "Start screen", icon: 'react'},
+    { name: 'Introduction', icon: 'pencil' },
+    { name: 'Basic rendering', icon: 'doc' },
+    { name: 'Basic reconciliation', icon: 'cog' },
+    { name: 'Сomponents', icon: 'code' },
+    { name: 'State', icon: 'progress-2' },
+    { name: 'Handling props', icon: 'th-list' },
+  ],
+  ru: [
+    { name: "Начальный экран", icon: 'react'},
+    { name: 'Введение', icon: 'pencil' },
+    { name: 'Базовый рендеринг', icon: 'doc' },
+    { name: 'Согласование', icon: 'cog' },
+    { name: 'Компоненты', icon: 'code' },
+    { name: 'Состояние', icon: 'progress-2' },
+    { name: 'Обработка props', icon: 'th-list' },
+  ],
+}
 
 export const SidebarItem = ({ active, children, onClick }) => {
   const className = [active ? 'active' : '', 'sidebar__item'];
@@ -39,15 +50,17 @@ export class Sidebar extends Component {
   }
 
   render() {
-    const { chapter, onChange } = this.props;
+    const { chapter, onChange, lang } = this.props;
     const { open } = this.state;
 
     const activeClass = open ? 'active' : '';
 
+    console.log(lang);
+
     return (
       <Container className={`sidebar ${activeClass}`}>
         <ul className="sidebar__list">
-          {CHAPTERS.map((item, ind) => (
+          {CHAPTERS[lang].map((item, ind) => (
             <SidebarItem 
               active={chapter === ind} 
               key={item.name} 

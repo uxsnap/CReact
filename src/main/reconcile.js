@@ -129,7 +129,7 @@ export const reconcileComponent = (vdom, dom, parent) => {
   const props = Object.assign({}, vdom.props, {
     children: vdom.children.flat()
   });
-
+  
   if (vdom.type.prototype instanceof Component) {
     return reconcileClassComponent(vdom, dom, parent, props);
   } else {
@@ -159,6 +159,6 @@ export const reconcileClassComponent = (vdom, dom, parent, newProps) => {
 
     return updated;
   } else {
-    return render(vdom, parent);
+    return replace(parent)(dom, render(vdom, parent));
   }
 };

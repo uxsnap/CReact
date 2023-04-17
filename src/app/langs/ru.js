@@ -3,6 +3,11 @@ import { CodeWrap, Paragraph } from "../components";
 
 export default [
   [
+    "CReact",
+    "Создай собственную frontend библиотеку с нуля!",
+    "Начать"
+  ],
+  [
     "Введение",
     
     "Привет! Вы, наверное, уже знакомы с самой популярной библиотеке для фронтенда",
@@ -215,7 +220,7 @@ export default [
     "Codesandbox:",
   ],
   [
-    "Обработка компонентов",
+    "Компоненты",
     <Fragment>
       В этой главе мы научимся обрабатывать компоненты в <CodeWrap>JSX</CodeWrap>.
     </Fragment>,
@@ -265,7 +270,7 @@ export default [
 
   ],
   [
-    "Добавление состояния",
+    "Cостояние",
 
     <Fragment>
       В этой главе мы добавим<CodeWrap>состояние</CodeWrap>и 

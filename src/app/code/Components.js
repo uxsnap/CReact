@@ -98,7 +98,7 @@ export const RECONCILE_6 = `export const reconcileClassComponent = (vdom, dom, p
     
     return updated;
   } else {
-    return render(vdom, parent);
+    return replace(parent)(dom, render(vdom, parent));
   }
 };`
 
