@@ -79,8 +79,6 @@ class App extends Component {
     const lang = getLang(this.state.lang)[this.state.chapter];
     const Component = this.getPageByChapterNum(this.state.chapter);
 
-    console.log(lang);
-
     return (
       <div className="main">
         {

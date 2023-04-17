@@ -55,8 +55,6 @@ export class Sidebar extends Component {
 
     const activeClass = open ? 'active' : '';
 
-    console.log(lang);
-
     return (
       <Container className={`sidebar ${activeClass}`}>
         <ul className="sidebar__list">
