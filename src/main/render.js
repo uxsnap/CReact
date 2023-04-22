@@ -1,5 +1,6 @@
 import { Component } from "./component";
 import { __RERENDER_HELPER, getDerivedStateFromProps } from '../helpers';
+import { currentlyRenderingComponent, INSTANCE_MAP, currentlyStateId } from './hooks';
 
 export const createElement = (type, props, ...children) => ({
   type,
@@ -62,14 +63,32 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 100) => {
 
     return component.__dom;
   } else {
-    const component = vdom.type(props);
+    const instanceToken = Symbol(vdom.type.name || 'Anonymous');
 
-    // Need to fix this part
+    if (!INSTANCE_MAP.has(instanceToken)) {
+      INSTANCE_MAP.set(instanceToken, {
+        __dom: null,
+        __instance: vdom, 
+        __hooks: [],
+      });
+    }
+    
+    currentlyRenderingComponent.current = instanceToken;
+    currentlyRenderingComponent.hookIndex = 0;
+    
+    const curInstanceItem = INSTANCE_MAP.get(instanceToken);
+    
+    const component = vdom.type(props);
+    
     if (component.props) {
       component.props.key = (props && props.key) || undefined;
     }
+    
+    const dom = render(component, parent, removeOutlineTime);
+    
+    curInstanceItem.__dom = dom;
 
-    return render(component, parent, removeOutlineTime);
+    return dom;
   }
 };
 

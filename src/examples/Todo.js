@@ -1,4 +1,5 @@
 import { Component } from '../main/component';
+import { useState } from '../main/hooks';
 import { createElement } from '../main/render';
 
 class TodoItem extends Component {
@@ -98,18 +99,36 @@ export class Todo extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Input 
-                    id="text" 
-                    title="Add item to todo:" 
-                    type="text" 
-                    value={this.state.name} 
-                    onChange={this.onNameChange}
-                />
-                <TodoList items={this.state.items} onRemove={this.removeItem}/>
-                <button onClick={this.addItem}>Add item</button>
-            </div>
-        );
+      return (
+        <div>
+          <Input 
+            id="text" 
+            title="Add item to todo:" 
+            type="text" 
+            value={this.state.name} 
+            onChange={this.onNameChange}
+          />
+          <TodoList items={this.state.items} onRemove={this.removeItem}/>
+          <button onClick={this.addItem}>Add item</button>
+        </div>
+      );
     }
 }
+
+export const Test = () => {
+  const [cur, setCur] = useState(0);
+  const [val, setVal] = useState('');
+
+  return (
+    <div style={{ fontSize: '30px' }}>
+      <div onClick={() => setCur(cur + 1)}>Counter: {cur}</div>
+
+      <Input 
+        id="text" 
+        type="text" 
+        value={val} 
+        onChange={setVal}
+      />
+    </div>
+  );
+};

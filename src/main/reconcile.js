@@ -16,6 +16,7 @@
 import { __LOG, getDerivedStateFromProps, NODE_TYPES } from "../helpers";
 import { render, setProp } from "./render";
 import { Component } from "./component";
+import { currentlyRenderingComponent } from './hooks';
 
 const replace = (parent) => {
   return parent
@@ -133,6 +134,7 @@ export const reconcileComponent = (vdom, dom, parent) => {
   if (vdom.type.prototype instanceof Component) {
     return reconcileClassComponent(vdom, dom, parent, props);
   } else {
+    currentlyRenderingComponent.hookIndex = 0;
     return reconcile(vdom.type(props), dom, parent);
   }
 };
