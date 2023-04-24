@@ -69,11 +69,13 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 100) => {
     const instanceToken = (vdom.type.name || 'Anonymous') + RENDER_INDEX++;
 
     currentlyRenderingComponent.current = instanceToken;
-    currentlyRenderingComponent.hookIndex = 0;
+    currentlyRenderingComponent.stateHookIndex = 0;
+    currentlyRenderingComponent.effectHookIndex = 0;
 
     if (!INSTANCE_MAP.has(instanceToken)) {
       INSTANCE_MAP.set(instanceToken, {
-        __hooks: [],
+        __states: [],
+        __effects: []
       });
     }
 

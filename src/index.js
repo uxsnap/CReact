@@ -1,6 +1,6 @@
 import App from './app';
-import { Todo } from './examples/Todo';
+import { Effect } from './examples/Effect';
 import { render, createElement } from './main/render';
 import './app/style/index.scss';
 
-render(<Todo />, document.getElementById('app'));
+render(<Effect />, document.getElementById('app'));

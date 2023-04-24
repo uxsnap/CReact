@@ -1,34 +1,63 @@
+import { __SHALLOW_COMPARE } from "../helpers";
 import { reconcile } from "./reconcile";
 
 export const INSTANCE_MAP = new Map();
 
-export let currentlyRenderingComponent = { current: null, hookIndex: 0 };
+export let currentlyRenderingComponent = { current: null, stateHookIndex: 0, effectHookIndex: 0 };
 
-export function useState(defValue) {
+const getComponent = () => {
   let instanceToken = currentlyRenderingComponent.current;
 
-  const component = INSTANCE_MAP.get(instanceToken);
+  return INSTANCE_MAP.get(instanceToken);
+};
+
+export function useState(defValue) {
+  const component = getComponent();
   
-  if (component.__hooks[currentlyRenderingComponent.hookIndex] === undefined) {
-    component.__hooks[currentlyRenderingComponent.hookIndex] = { 
+  if (component.__states[currentlyRenderingComponent.stateHookIndex] === undefined) {
+    component.__states[currentlyRenderingComponent.stateHookIndex] = { 
       state: defValue
     };
   }
   
-  let hookObj = component.__hooks[currentlyRenderingComponent.hookIndex];
+  let stateObj = component.__states[currentlyRenderingComponent.stateHookIndex];
 
-  currentlyRenderingComponent.hookIndex++;
+  currentlyRenderingComponent.stateHookIndex++;
 
   return [
-    hookObj.state,
+    stateObj.state,
     (newVal) => {    
       const { __dom } = component;
       const { __funcInstance } = __dom;
   
-      hookObj.state = newVal;
+      stateObj.state = newVal;
       
       component.__dom = reconcile(__funcInstance, __dom);
       component.__dom.__funcInstance = __funcInstance;
     }
   ];
 };
+
+export function useEffect(func, depArray) {
+  const component = getComponent();
+  
+  if (component.__effects[currentlyRenderingComponent.effectHookIndex] === undefined) {
+    component.__effects[currentlyRenderingComponent.effectHookIndex] = {
+      func,
+      depArray
+    }
+  }
+
+  let effectsObj = component.__effects[currentlyRenderingComponent.effectHookIndex];
+
+  if (!effectsObj.depArray.length) {
+    effectsObj.func();
+  } else if (!__SHALLOW_COMPARE(effectsObj.depArray, depArray)) {
+    effectsObj.func = func;
+    effectsObj.depArray = depArray;
+
+    effectsObj.func();
+  }
+
+  currentlyRenderingComponent.effectHookIndex++;
+}

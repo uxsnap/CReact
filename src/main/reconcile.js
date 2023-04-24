@@ -149,7 +149,8 @@ export const reconcileFunctionComponent = (vdom, dom, parent, newProps) => {
     dom.__funcInstance &&
     dom.__funcInstance.type.prototype.constructor === vdom.type.prototype.constructor
     ) {
-    currentlyRenderingComponent.hookIndex = 0;
+    currentlyRenderingComponent.stateHookIndex = 0;
+    currentlyRenderingComponent.effectHookIndex = 0;
     currentlyRenderingComponent.current = dom.__token;
 
     dom.__funcInstance.props = newProps;
