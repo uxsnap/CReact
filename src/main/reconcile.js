@@ -16,7 +16,7 @@
 import { __LOG, getDerivedStateFromProps, NODE_TYPES } from "../helpers";
 import { render, setProp } from "./render";
 import { Component } from "./component";
-import { currentlyRenderingComponent } from './hooks';
+import { currentlyRenderingComponent, INSTANCE_MAP } from './hooks';
 
 const replace = (parent) => {
   return parent
@@ -76,13 +76,13 @@ export const reconcile = (vdom, dom, parent = dom.parentNode) => {
       const curChildNodes = {};
 
       Array
-        .from(dom.childNodes)
-        .flat()
-        .forEach((child, ind) => {
-          const key = child && child.__key ? child.__key : `___key__${ind}__`;
-          
-          curChildNodes[key] = child
-        });
+      .from(dom.childNodes)
+      .flat()
+      .forEach((child, ind) => {
+        const key = child && child.__key ? child.__key : `___key__${ind}__`;
+        
+        curChildNodes[key] = child
+      });
 
       for (const attr of dom.getAttributeNames()) dom.removeAttribute(attr);
       for (const event in dom.__eventHandlers || {}) {
@@ -91,27 +91,33 @@ export const reconcile = (vdom, dom, parent = dom.parentNode) => {
       }
 
       for (const prop in newProps) setProp(dom, prop, newProps[prop]);
-
+      
       vdom.children.flat().forEach((child, ind) => {
         const props = child && child.props ? child.props : {};
         let key = props.key || `___key__${ind}__`;
+
         __LOG(curChildNodes, key);
-
+        
         if (key in curChildNodes) {
-          reconcile(child, curChildNodes[key], dom);
           __LOG("RECONCILED OLD CHILD WITH THE SAME KEY", key);
-          delete curChildNodes[key];
-        }
-        else {
-          dom.insertBefore(render(child, dom), dom.childNodes[key]);
+          reconcile(child, curChildNodes[key]);
+        } else {
           __LOG("INSERTED NEW CHILD TO DOM");
+          dom.appendChild(render(child, dom));
         }
+        
+        delete curChildNodes[key];
       });
-
+      
       for (let key in curChildNodes) {
         if (curChildNodes[key].__instance) {
           curChildNodes[key].__instance.componentWillUnmount();
         }
+
+        if (curChildNodes[key].__funcInstance) {
+          INSTANCE_MAP.delete(curChildNodes[key].__token);
+        }
+
         curChildNodes[key].remove();
       }
 
@@ -134,8 +140,23 @@ export const reconcileComponent = (vdom, dom, parent) => {
   if (vdom.type.prototype instanceof Component) {
     return reconcileClassComponent(vdom, dom, parent, props);
   } else {
+    return reconcileFunctionComponent(vdom, dom, parent, props);
+  }
+};
+
+export const reconcileFunctionComponent = (vdom, dom, parent, newProps) => {
+  if (
+    dom.__funcInstance &&
+    dom.__funcInstance.type.prototype.constructor === vdom.type.prototype.constructor
+    ) {
     currentlyRenderingComponent.hookIndex = 0;
-    return reconcile(vdom.type(props), dom, parent);
+    currentlyRenderingComponent.current = dom.__token;
+
+    dom.__funcInstance.props = newProps;
+
+    return reconcile(dom.__funcInstance.type(newProps), dom, parent);
+  } else {
+    return replace(parent)(dom, render(vdom, parent));
   }
 };
 

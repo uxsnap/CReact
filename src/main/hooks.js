@@ -8,24 +8,27 @@ export function useState(defValue) {
   let instanceToken = currentlyRenderingComponent.current;
 
   const component = INSTANCE_MAP.get(instanceToken);
-
-  if (component.__hooks[currentlyRenderingComponent.hookIndex] === undefined) {
-    component.__hooks[currentlyRenderingComponent.hookIndex] =  { state: defValue };
-  }
-
-  let hookObj = component.__hooks[currentlyRenderingComponent.hookIndex];
   
-  function setState(newVal) {
-    const { __instance, __dom } = component;
-
-    hookObj.state = newVal;
-
-    reconcile(__instance, __dom, __dom.parentNode);
+  if (component.__hooks[currentlyRenderingComponent.hookIndex] === undefined) {
+    component.__hooks[currentlyRenderingComponent.hookIndex] = { 
+      state: defValue
+    };
   }
+  
+  let hookObj = component.__hooks[currentlyRenderingComponent.hookIndex];
 
   currentlyRenderingComponent.hookIndex++;
+
   return [
     hookObj.state,
-    setState
+    (newVal) => {    
+      const { __dom } = component;
+      const { __funcInstance } = __dom;
+  
+      hookObj.state = newVal;
+      
+      component.__dom = reconcile(__funcInstance, __dom);
+      component.__dom.__funcInstance = __funcInstance;
+    }
   ];
 };

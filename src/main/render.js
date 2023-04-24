@@ -1,6 +1,6 @@
 import { Component } from "./component";
 import { __RERENDER_HELPER, getDerivedStateFromProps } from '../helpers';
-import { currentlyRenderingComponent, INSTANCE_MAP, currentlyStateId } from './hooks';
+import { currentlyRenderingComponent, INSTANCE_MAP } from './hooks';
 
 export const createElement = (type, props, ...children) => ({
   type,
@@ -32,6 +32,9 @@ export const Fragment = (props) => {
  * We just need to append child to the dom when it has parent
  * When it doesn't have one it appears that the child itself is a parent (root component)
  */
+
+export let RENDER_INDEX = 0;
+
 const mount = (parent) => (dom, removeOutlineTime) => {
   if (parent) {
     __RERENDER_HELPER(dom, removeOutlineTime);
@@ -63,32 +66,27 @@ export const renderComponent = (vdom, parent, removeOutlineTime = 100) => {
 
     return component.__dom;
   } else {
-    const instanceToken = Symbol(vdom.type.name || 'Anonymous');
+    const instanceToken = (vdom.type.name || 'Anonymous') + RENDER_INDEX++;
+
+    currentlyRenderingComponent.current = instanceToken;
+    currentlyRenderingComponent.hookIndex = 0;
 
     if (!INSTANCE_MAP.has(instanceToken)) {
       INSTANCE_MAP.set(instanceToken, {
-        __dom: null,
-        __instance: vdom, 
         __hooks: [],
       });
     }
-    
-    currentlyRenderingComponent.current = instanceToken;
-    currentlyRenderingComponent.hookIndex = 0;
-    
+
     const curInstanceItem = INSTANCE_MAP.get(instanceToken);
-    
+
     const component = vdom.type(props);
     
-    if (component.props) {
-      component.props.key = (props && props.key) || undefined;
-    }
-    
-    const dom = render(component, parent, removeOutlineTime);
-    
-    curInstanceItem.__dom = dom;
+    curInstanceItem.__dom = render(component, parent, removeOutlineTime);
+    curInstanceItem.__dom.__funcInstance = vdom;
+    curInstanceItem.__dom.__token = instanceToken;
+    curInstanceItem.__dom.__key = (props && props.key) || undefined;
 
-    return dom;
+    return curInstanceItem.__dom;
   }
 };
 

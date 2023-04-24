@@ -1,134 +1,75 @@
-import { Component } from '../main/component';
-import { useState } from '../main/hooks';
 import { createElement } from '../main/render';
+import { useState } from '../main/hooks';
 
-class TodoItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: false
-        };
+const TodoItem = ({ children, key, onClick }) => {
+    const [value, setValue] = useState(false);
 
-        this.onToggle = this.onToggle.bind(this);
-    }
+    const onToggle = () => setValue(!value);
 
-    onToggle() {
-        this.setState({ value: !this.state.value });
-    }
-
-    render() {
-        return (
-            <li key={this.props.key} style={{ textDecoration: this.state.value ? 'line-through' : ''}}>
-                <Input type="checkbox" onChange={this.onToggle} value={this.state.value}/>
-                <span>{this.props.children}</span>
-                <button onClick={this.props.onClick} href={"#" + this.props.children}>Click</button>
-            </li>
-        );
-    }
+    return (
+        <li key={key + ''} style={{ textDecoration: value ? 'line-through' : ''}}>
+            <Input type="checkbox" onChange={onToggle} value={value}/>
+            <span>{children}</span>
+            <button onClick={onClick} href={"#" + children}>Click</button>
+        </li>
+    );
 };
-class TodoList extends Component {
-    constructor(props) {
-        super(props);
+
+const TodoList = ({ items, onRemove }) => {
+    return (
+        <ul className="todoList">
+            {items.map((item) => (
+                <TodoItem key={item.name + '_' + item.id} onClick={(e) => {
+                    onRemove(item.id);
+                    e.stopPropagation();
+                }}>{item.name}</TodoItem>    
+            ))}  
+        </ul>
+    );
+};
+
+export const Input = ({ type, value, onChange, id, title }) => (
+    <label for={id || ''}>
+        {title && <span>{title}</span>}
+        <input id={id || ''} type={type} value={value} onChange={(event) => {
+            onChange(event.target.value)
+        }} />
+    </label>
+);
+
+
+export const Todo = () => {
+    const [items, setItems] = useState([{ name: 'test', id: 0 }]);
+    const [name, setName] = useState('');
+    const [count, setCount] = useState(1);
+    
+    const removeItem = (id) => {
+        setItems(items.filter((i) => i.id !== id));
     }
 
-    render() {
-        return (
-            <ul className="todoList">
-                {this.props.items.map(item => (
-                    <TodoItem key={item} onClick={(e) => {
-                        this.props.onRemove(item);
-                        e.stopPropagation();
-                    }}>{item}</TodoItem>    
-                ))}  
-            </ul>
-        );
-    }
-}
+    const onNameChange = (newName) => setName(newName);
 
-class Input extends Component {
-    constructor(props) {
-        super(props);
+    const addItem = () => {
+        const curName = name.trim();
+        if (!curName.length) return;
+
+        setCount(count + 1);
+        setItems([...items, { name: curName, id: count } ]);
+        setName('');
     }
 
-    render() {
-        const { type, value, onChange, id, title } = this.props;
-
-        return (
-            <label for={id || ''}>
-                {title && <span>{title}</span>}
-                <input id={id || ''} type={type} value={value} onChange={(event) => {
-                    onChange(event.target.value)
-                }} />
-            </label>
-        );
-    }
-}
-
-
-export class Todo extends Component {
-    constructor() {
-        super();
-        this.state = {
-            items: [],
-            name: '',
-        };
-
-        this.removeItem = this.removeItem.bind(this);
-        this.addItem = this.addItem.bind(this);
-        this.onNameChange = this.onNameChange.bind(this);
-    }
-
-    removeItem(item) {
-        this.setState({
-            items: this.state.items.filter(i => i !== item)
-        });
-    }
-
-    onNameChange(name) {
-        this.setState({ name });
-    }
-
-    addItem() {
-        const name = this.state.name.trim();
-        if (!name.length) return;
-
-        this.setState({
-            items: this.state.items.concat(name),
-            name: '',
-        });
-    }
-
-    render() {
-      return (
+    return (
         <div>
-          <Input 
-            id="text" 
-            title="Add item to todo:" 
-            type="text" 
-            value={this.state.name} 
-            onChange={this.onNameChange}
-          />
-          <TodoList items={this.state.items} onRemove={this.removeItem}/>
-          <button onClick={this.addItem}>Add item</button>
+            <Input 
+                id="text" 
+                title="Add item to todo:" 
+                type="text" 
+                value={name} 
+                onChange={onNameChange}
+            />
+            <div>{count}</div>
+            <TodoList items={items} onRemove={removeItem}/>
+            <button onClick={addItem}>Add item</button>
         </div>
-      );
-    }
+    );
 }
-
-export const Test = () => {
-  const [cur, setCur] = useState(0);
-  const [val, setVal] = useState('');
-
-  return (
-    <div style={{ fontSize: '30px' }}>
-      <div onClick={() => setCur(cur + 1)}>Counter: {cur}</div>
-
-      <Input 
-        id="text" 
-        type="text" 
-        value={val} 
-        onChange={setVal}
-      />
-    </div>
-  );
-};
