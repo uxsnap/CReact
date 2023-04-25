@@ -1,6 +1,8 @@
 import { Fragment, createElement } from "../../main/render";
 import { CodeWrap, Paragraph } from "../components";
 
+const INSPIRED_BY = "https://stackoverflow.com/questions/53974865/how-do-react-hooks-determine-the-component-that-they-are-for/53980190#53980190";
+
 export default [
   [
     "CReact",
@@ -448,5 +450,54 @@ export default [
     "Codesandbox:",
 
     "Now our code supports specific props and Todo works as expected."
+  ],
+  [
+    "Hooks",
+
+    <Fragment>
+      In this chapter we will add the support of<CodeWrap>hooks</CodeWrap>hence
+      the<CodeWrap>state</CodeWrap>to the<CodeWrap>Functional</CodeWrap>components.
+      Nevertheless, the main concept of<CodeWrap>hooks</CodeWrap>seems different 
+      to<CodeWrap>class</CodeWrap>components, you will find many similarities between them.
+      The contents of this chapter is heavily inspired by this 
+      <a 
+        style={{ marginLeft: '5px' }} 
+        target="_blank" 
+        href={INSPIRED_BY}
+      >
+        post
+        </a>
+    </Fragment>,
+
+    <Fragment>
+      Firstly, let's add the file where hooks we'll be implemented:
+    </Fragment>,
+
+    <Fragment>
+      The<CodeWrap>INSTANCE_MAP</CodeWrap>object contains all<CodeWrap>states</CodeWrap>
+      and<CodeWrap>effects</CodeWrap> of the components.<CodeWrap>currentlyRenderingComponent</CodeWrap>
+      is a helper object which will help us figure it out which<CodeWrap>useState</CodeWrap>
+      or<CodeWrap>useEffect</CodeWrap> needs to be called at that moment. Also, it contains the 
+      <CodeWrap>token</CodeWrap>of the current component that's being rendered. 
+    </Fragment>,
+
+    <Fragment>
+      Our next step is to update<CodeWrap>renderComponent</CodeWrap>function to handle
+      <CodeWrap>Functional</CodeWrap>components with hooks.   
+    </Fragment>,
+
+    [
+      <Paragraph>
+        On the line <CodeWrap>17</CodeWrap>, the current component token is being created
+      </Paragraph>,
+      <Paragraph>
+        On the lines <CodeWrap>19-21</CodeWrap>, we update<CodeWrap>currentlyRenderingComponent</CodeWrap>
+        with<CodeWrap>token</CodeWrap>of currently rendering component and initializes 
+        <CodeWrap>states</CodeWrap>and<CodeWrap>effects</CodeWrap>counters.
+      </Paragraph>,
+      <Paragraph>
+        On the lines <CodeWrap>64-69</CodeWrap>, unchecked children are removed from the dom.
+      </Paragraph>,
+    ],
   ]
 ]

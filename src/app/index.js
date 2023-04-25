@@ -7,7 +7,8 @@ import {
   BasicReconciliation, 
   Props, 
   Components, 
-  StartScreen
+  StartScreen,
+  Hooks
 } from './pages'; 
 import { Container, LangSwitch, Sidebar } from "./components";
 import { State } from "./pages/State";
@@ -51,7 +52,8 @@ class App extends Component {
       BasicReconciliation,
       Components,
       State,
-      Props
+      Props,
+      Hooks
     ];
     
     return chapters[this.state.chapter];

@@ -12,6 +12,7 @@ const CHAPTERS = {
     { name: 'Сomponents', icon: 'code' },
     { name: 'State', icon: 'progress-2' },
     { name: 'Handling props', icon: 'th-list' },
+    { name: 'Hooks', icon: 'wand-magic-sparkles-solid' },
   ],
   ru: [
     { name: "Начальный экран", icon: 'react'},
@@ -21,6 +22,7 @@ const CHAPTERS = {
     { name: 'Компоненты', icon: 'code' },
     { name: 'Состояние', icon: 'progress-2' },
     { name: 'Обработка props', icon: 'th-list' },
+    { name: 'Хуки', icon: 'wand-magic-sparkles-solid' },
   ],
 }
 
