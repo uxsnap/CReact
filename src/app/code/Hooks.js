@@ -1,3 +1,5 @@
+import { escapeHtml } from '../utils';
+
 export const HOOKS_1 = `export const INSTANCE_MAP = new Map();
 
 export let currentlyRenderingComponent = { current: null, stateHookIndex: 0, effectHookIndex: 0 };
@@ -50,3 +52,97 @@ export const RENDER_COMPONENT_3 = `export const renderComponent = (vdom, parent,
   }
 };
 `;
+
+export const RECONCILE_10 = `export const reconcileComponent = (vdom, dom, parent) => {
+  const props = Object.assign({}, vdom.props, {
+    children: vdom.children.flat()
+  });
+  
+  if (vdom.type.prototype instanceof Component) {
+    return reconcileClassComponent(vdom, dom, parent, props);
+  } else {
+    return reconcileFunctionComponent(vdom, dom, parent, props);
+  }
+};
+
+export const reconcileFunctionComponent = (vdom, dom, parent, newProps) => {
+  if (
+    dom.__funcInstance &&
+    dom.__funcInstance.type.prototype.constructor === vdom.type.prototype.constructor
+    ) {
+    currentlyRenderingComponent.stateHookIndex = 0;
+    currentlyRenderingComponent.effectHookIndex = 0;
+    currentlyRenderingComponent.current = dom.__token;
+
+    dom.__funcInstance.props = newProps;
+
+    return reconcile(dom.__funcInstance.type(newProps), dom, parent);
+  } else {
+    return replace(parent)(dom, render(vdom, parent));
+  }
+};`
+
+export const TODO_1 = escapeHtml(`export const Todo = () => {
+  const [items, setItems] = useState([{ name: 'test', id: 0 }]);
+  const [name, setName] = useState('');
+  const [count, setCount] = useState(1);
+  
+  const removeItem = (id) => {
+    setItems(items.filter((i) => i.id !== id));
+  }
+
+  const onNameChange = (newName) => setName(newName);
+
+  const addItem = () => {
+    const curName = name.trim();
+    if (!curName.length) return;
+
+    setCount(count + 1);
+    setItems([...items, { name: curName, id: count } ]);
+    setName('');
+  }
+
+  return (
+    <div>
+      <Input 
+        id="text" 
+        title="Add item to todo:" 
+        type="text" 
+        value={name} 
+        onChange={onNameChange}
+      />
+      <div>{count}</div>
+      <TodoList items={items} onRemove={removeItem}/>
+      <button onClick={addItem}>Add item</button>
+    </div>
+  );
+}`);
+
+export const HOOKS_2 = `export const INSTANCE_MAP = new Map();
+
+export let currentlyRenderingComponent = { current: null, stateHookIndex: 0, effectHookIndex: 0 };
+
+const getComponent = () => {
+  let instanceToken = currentlyRenderingComponent.current;
+
+  return INSTANCE_MAP.get(instanceToken);
+};
+
+export function useState(defValue) {
+  const component = getComponent();
+  
+  if (component.__states[currentlyRenderingComponent.stateHookIndex] === undefined) {
+    component.__states[currentlyRenderingComponent.stateHookIndex] = { 
+      state: defValue
+    };
+  }
+  
+  let stateObj = component.__states[currentlyRenderingComponent.stateHookIndex];
+
+  currentlyRenderingComponent.stateHookIndex++;
+
+  return [
+    stateObj.state,
+    (newVal) => {},    
+  ];
+};`;

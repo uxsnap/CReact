@@ -87,7 +87,7 @@ export const RECONCILE_3 = `export const reconcile = (vdom, dom, parent = dom.pa
           reconcile(child, curChildNodes[ind], dom);
           delete curChildNodes[ind];
         } else {
-          dom.insertBefore(render(child, dom), dom.childNodes[ind]);
+          dom.appendChild(render(child, dom));
         }
       });
 

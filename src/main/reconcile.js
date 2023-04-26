@@ -101,12 +101,12 @@ export const reconcile = (vdom, dom, parent = dom.parentNode) => {
         if (key in curChildNodes) {
           __LOG("RECONCILED OLD CHILD WITH THE SAME KEY", key);
           reconcile(child, curChildNodes[key]);
+          delete curChildNodes[key];
         } else {
           __LOG("INSERTED NEW CHILD TO DOM");
           dom.appendChild(render(child, dom));
         }
         
-        delete curChildNodes[key];
       });
       
       for (let key in curChildNodes) {

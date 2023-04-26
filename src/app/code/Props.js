@@ -204,7 +204,7 @@ export const RECONCILE_9 = `export const reconcile = (vdom, dom, parent = dom.pa
           reconcile(child, curChildNodes[key], dom);
           delete curChildNodes[key];
         } else {
-          dom.insertBefore(render(child, dom), dom.childNodes[key]);
+          dom.appendChild(render(child, dom));
         }
       });
 

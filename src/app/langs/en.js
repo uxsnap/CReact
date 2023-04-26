@@ -488,16 +488,67 @@ export default [
 
     [
       <Paragraph>
-        On the line <CodeWrap>17</CodeWrap>, the current component token is being created
+        On the line<CodeWrap>17</CodeWrap>, the current component token is being created
       </Paragraph>,
       <Paragraph>
-        On the lines <CodeWrap>19-21</CodeWrap>, we update<CodeWrap>currentlyRenderingComponent</CodeWrap>
-        with<CodeWrap>token</CodeWrap>of currently rendering component and initializes 
+        On the lines<CodeWrap>19-21</CodeWrap>, we update<CodeWrap>currentlyRenderingComponent</CodeWrap>
+        with<CodeWrap>token</CodeWrap>and initialize 
         <CodeWrap>states</CodeWrap>and<CodeWrap>effects</CodeWrap>counters.
       </Paragraph>,
       <Paragraph>
-        On the lines <CodeWrap>64-69</CodeWrap>, unchecked children are removed from the dom.
+        On the lines<CodeWrap>64-69</CodeWrap>, unchecked children are removed from the dom.
+      </Paragraph>,
+      <Paragraph>
+        On the lines<CodeWrap>23-28</CodeWrap>, we check if we already have the needed record
+        and create a new one if we need.
+      </Paragraph>,
+      <Paragraph>
+        On the lines<CodeWrap>34-39</CodeWrap>, we assign special fields just as we did in
+        <CodeWrap>class</CodeWrap>components.
       </Paragraph>,
     ],
+
+    <Fragment>
+      Next, we update <CodeWrap>reconcile</CodeWrap>function to handle stateful<CodeWrap>Functional</CodeWrap>
+      components.
+    </Fragment>,
+
+    [
+      <Paragraph>
+        On the line<CodeWrap>9</CodeWrap>, we call new function instead of just rendering 
+        <CodeWrap>Functional</CodeWrap> component.
+      </Paragraph>,
+      <Paragraph>
+        On the lines<CodeWrap>14-16</CodeWrap>, we check if the component is the same just like we did 
+        with the<CodeWrap>class</CodeWrap>components and if not, we replace old one with the new on the 
+        line<CodeWrap>26</CodeWrap>.
+      </Paragraph>,
+      <Paragraph>
+        On the lines<CodeWrap>18-22</CodeWrap>, we reinitialize counters and assign our currently reconciling
+        component's token to the<CodeWrap>current</CodeWrap>field. And just before the reconciliation, we update
+        our component's props on the line<CodeWrap>22</CodeWrap>.
+      </Paragraph>,
+    ],
+
+    <Fragment>
+      Just before we jump into implementation of hooks, it must be explained how the hell hooks
+      works in the first place and why do we update fields of the<CodeWrap>currentlyRenderingComponent</CodeWrap>
+      all the time? 
+    </Fragment>,
+
+    <Fragment>
+      Let's look on the renewed<CodeWrap>Todo</CodeWrap>component:
+    </Fragment>,
+
+    <Fragment>
+      First, the component gets rendered by the<CodeWrap>render</CodeWrap>function. There the required fields
+      are all updated and the component function is called. When the function is in the stage of 
+      execution of its code, the<CodeWrap>useState</CodeWrap>gets called.
+    </Fragment>,
+
+    <Fragment>
+      Then, inside<CodeWrap>useState</CodeWrap>, we're getting the component by the help of the
+      <CodeWrap>currentlyRenderingComponent</CodeWrap>. Here's the code of it: 
+    </Fragment>
   ]
 ]
