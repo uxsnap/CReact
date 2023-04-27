@@ -66,10 +66,7 @@ export const RECONCILE_10 = `export const reconcileComponent = (vdom, dom, paren
 };
 
 export const reconcileFunctionComponent = (vdom, dom, parent, newProps) => {
-  if (
-    dom.__funcInstance &&
-    dom.__funcInstance.type.prototype.constructor === vdom.type.prototype.constructor
-    ) {
+  if (dom.__funcInstance && dom.__funcInstance.type === vdom.type) {
     currentlyRenderingComponent.stateHookIndex = 0;
     currentlyRenderingComponent.effectHookIndex = 0;
     currentlyRenderingComponent.current = dom.__token;
@@ -143,6 +140,51 @@ export function useState(defValue) {
 
   return [
     stateObj.state,
-    (newVal) => {},    
+    (newVal) => {    
+      const { __dom } = component;
+      const { __funcInstance } = __dom;
+  
+      stateObj.state = newVal;
+      
+      component.__dom = reconcile(__funcInstance, __dom);
+      component.__dom.__funcInstance = __funcInstance;
+    }
   ];
 };`;
+
+export const RECONCILE_11 = `for (let key in curChildNodes) {
+  if (curChildNodes[key].__instance) {
+    curChildNodes[key].__instance.componentWillUnmount();
+  }
+
+  if (curChildNodes[key].__funcInstance) {
+    INSTANCE_MAP.delete(curChildNodes[key].__token);
+  }
+
+  curChildNodes[key].remove();
+}
+`
+
+export const HOOKS_3 = `export function useEffect(func, depArray) {
+  const component = getComponent();
+  
+  if (component.__effects[currentlyRenderingComponent.effectHookIndex] === undefined) {
+    component.__effects[currentlyRenderingComponent.effectHookIndex] = {
+      func,
+      depArray
+    }
+  }
+
+  let effectsObj = component.__effects[currentlyRenderingComponent.effectHookIndex];
+
+  if (!effectsObj.depArray.length) {
+    effectsObj.func();
+  } else if (!__SHALLOW_COMPARE(effectsObj.depArray, depArray)) {
+    effectsObj.func = func;
+    effectsObj.depArray = depArray;
+
+    effectsObj.func();
+  }
+
+  currentlyRenderingComponent.effectHookIndex++;
+}`

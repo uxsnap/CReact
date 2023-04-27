@@ -455,52 +455,35 @@ export default [
     "Hooks",
 
     <Fragment>
-      In this chapter we will add the support of<CodeWrap>hooks</CodeWrap>hence
-      the<CodeWrap>state</CodeWrap>to the<CodeWrap>Functional</CodeWrap>components.
-      Nevertheless, the main concept of<CodeWrap>hooks</CodeWrap>seems different 
-      to<CodeWrap>class</CodeWrap>components, you will find many similarities between them.
-      The contents of this chapter is heavily inspired by this 
-      <a 
-        style={{ marginLeft: '5px' }} 
-        target="_blank" 
-        href={INSPIRED_BY}
-      >
-        post
-        </a>
+      In this chapter, we will add support for <CodeWrap>hooks</CodeWrap> and <CodeWrap>state</CodeWrap> to <CodeWrap>Functional</CodeWrap> components. Nevertheless, while the main concept of<CodeWrap>hooks</CodeWrap>seems different from that of<CodeWrap>class</CodeWrap>components, you will find many similarities between them. The contents of this chapter are heavily inspired by this <a style={{ marginLeft: '5px' }} target="_blank" href={INSPIRED_BY}>post</a>.
     </Fragment>,
 
     <Fragment>
-      Firstly, let's add the file where hooks we'll be implemented:
+      First, let's add the file where hooks will be implemented.
+    </Fragment>,
+
+    <Fragment>,
+      The<CodeWrap>INSTANCE_MAP</CodeWrap>object contains all<CodeWrap>states</CodeWrap>and<CodeWrap>effects</CodeWrap>of the components.<CodeWrap>currentlyRenderingComponent</CodeWrap>is a helper object that will help us figure out which<CodeWrap>useState</CodeWrap>or<CodeWrap>useEffect</CodeWrap>needs to be called at that moment. It also contains the<CodeWrap>token</CodeWrap>of the current component being rendered.
     </Fragment>,
 
     <Fragment>
-      The<CodeWrap>INSTANCE_MAP</CodeWrap>object contains all<CodeWrap>states</CodeWrap>
-      and<CodeWrap>effects</CodeWrap> of the components.<CodeWrap>currentlyRenderingComponent</CodeWrap>
-      is a helper object which will help us figure it out which<CodeWrap>useState</CodeWrap>
-      or<CodeWrap>useEffect</CodeWrap> needs to be called at that moment. Also, it contains the 
-      <CodeWrap>token</CodeWrap>of the current component that's being rendered. 
-    </Fragment>,
-
-    <Fragment>
-      Our next step is to update<CodeWrap>renderComponent</CodeWrap>function to handle
-      <CodeWrap>Functional</CodeWrap>components with hooks.   
+      Our next step is to update the<CodeWrap>renderComponent</CodeWrap>function to handle<CodeWrap>Functional</CodeWrap>components with hooks.   
     </Fragment>,
 
     [
       <Paragraph>
-        On the line<CodeWrap>17</CodeWrap>, the current component token is being created
+        On line<CodeWrap>17</CodeWrap>, we create the token for the current component.
       </Paragraph>,
       <Paragraph>
         On the lines<CodeWrap>19-21</CodeWrap>, we update<CodeWrap>currentlyRenderingComponent</CodeWrap>
-        with<CodeWrap>token</CodeWrap>and initialize 
-        <CodeWrap>states</CodeWrap>and<CodeWrap>effects</CodeWrap>counters.
+        with the<CodeWrap>token</CodeWrap>and initialize indexes.
       </Paragraph>,
       <Paragraph>
-        On the lines<CodeWrap>64-69</CodeWrap>, unchecked children are removed from the dom.
+        On the lines<CodeWrap>64-69</CodeWrap>, we remove unchecked children from the DOM.
       </Paragraph>,
       <Paragraph>
-        On the lines<CodeWrap>23-28</CodeWrap>, we check if we already have the needed record
-        and create a new one if we need.
+        On the lines<CodeWrap>23-28</CodeWrap>, we check if we already have the necessary record
+        and create a new one if needed.
       </Paragraph>,
       <Paragraph>
         On the lines<CodeWrap>34-39</CodeWrap>, we assign special fields just as we did in
@@ -515,40 +498,89 @@ export default [
 
     [
       <Paragraph>
-        On the line<CodeWrap>9</CodeWrap>, we call new function instead of just rendering 
+        On the line<CodeWrap>9</CodeWrap>, we call a new function instead of just rendering the
         <CodeWrap>Functional</CodeWrap> component.
       </Paragraph>,
       <Paragraph>
-        On the lines<CodeWrap>14-16</CodeWrap>, we check if the component is the same just like we did 
-        with the<CodeWrap>class</CodeWrap>components and if not, we replace old one with the new on the 
-        line<CodeWrap>26</CodeWrap>.
+        On the line<CodeWrap>14</CodeWrap>, we check if the component is the same, just like we did 
+        with<CodeWrap>class</CodeWrap>components. If it's not, we replace old component with the new one on the 
+        line<CodeWrap>23</CodeWrap>.
       </Paragraph>,
       <Paragraph>
-        On the lines<CodeWrap>18-22</CodeWrap>, we reinitialize counters and assign our currently reconciling
-        component's token to the<CodeWrap>current</CodeWrap>field. And just before the reconciliation, we update
+        On the lines<CodeWrap>15-21</CodeWrap>, we reinitialize indexes and assign our currently reconciling
+        component's token to the<CodeWrap>current</CodeWrap>field. Just before the reconciliation, we update
         our component's props on the line<CodeWrap>22</CodeWrap>.
+      </Paragraph>,
+      <Paragraph>
+        On the lines<CodeWrap>6-8</CodeWrap>, during the stage of children reconciliation, we delete the state 
+        of the removed component from<CodeWrap>INSTANCE_MAP</CodeWrap>.
       </Paragraph>,
     ],
 
     <Fragment>
-      Just before we jump into implementation of hooks, it must be explained how the hell hooks
-      works in the first place and why do we update fields of the<CodeWrap>currentlyRenderingComponent</CodeWrap>
-      all the time? 
+      Before we dive into the implementation of hooks, we need to explain how hooks work in the first place and why we
+      need to update fields of the<CodeWrap>currentlyRenderingComponent</CodeWrap>all the time. 
     </Fragment>,
 
     <Fragment>
-      Let's look on the renewed<CodeWrap>Todo</CodeWrap>component:
+      Let's take a look at the renewed<CodeWrap>Todo</CodeWrap>component:
     </Fragment>,
 
     <Fragment>
-      First, the component gets rendered by the<CodeWrap>render</CodeWrap>function. There the required fields
-      are all updated and the component function is called. When the function is in the stage of 
-      execution of its code, the<CodeWrap>useState</CodeWrap>gets called.
+      First, the component is rendered by the<CodeWrap>render</CodeWrap>function. 
+      All the required fields are updated,
+      and the component function is called. 
+      When the function executes its code, it calls<CodeWrap>useState</CodeWrap>.
     </Fragment>,
 
     <Fragment>
-      Then, inside<CodeWrap>useState</CodeWrap>, we're getting the component by the help of the
-      <CodeWrap>currentlyRenderingComponent</CodeWrap>. Here's the code of it: 
+      Then, inside<CodeWrap>useState</CodeWrap>, we get the currently rendering component using the
+      <CodeWrap>currentlyRenderingComponent</CodeWrap>helper. Here's the code:
+    </Fragment>,
+
+    [
+      <Paragraph>
+        On the lines<CodeWrap>14-18</CodeWrap>, we assign default<CodeWrap>state</CodeWrap> to the
+        <CodeWrap>hook</CodeWrap> if it's empty.
+      </Paragraph>,
+      <Paragraph>
+        On the lines<CodeWrap>20-22</CodeWrap>, we get the current<CodeWrap>state</CodeWrap>object of 
+        the hook and we increment<CodeWrap>stateHookIndex</CodeWrap>so the next hook of the component 
+        will get its state.
+      </Paragraph>,
+      <Paragraph>
+        On the lines<CodeWrap>27-33</CodeWrap>, we get component's<CodeWrap>instance</CodeWrap>
+        and<CodeWrap>dom</CodeWrap>element, then we update the<CodeWrap>state</CodeWrap>of the component
+        and reconcile it with the new state.
+      </Paragraph>,
+    ],
+
+    <Fragment>
+      That's the whole code for<CodeWrap>useState</CodeWrap>. 
+      Let's now implement<CodeWrap>useEffect</CodeWrap>.
+    </Fragment>,
+
+    [
+      <Paragraph>
+        On the lines<CodeWrap>2-11</CodeWrap>, we again get the state of the current hook, but now from 
+        the other object,<CodeWrap>__effects</CodeWrap>.
+      </Paragraph>,
+      <Paragraph>
+        On the line<CodeWrap>22</CodeWrap>, we increment<CodeWrap>effectHookIndex</CodeWrap> so 
+        the next hook of the component will get its effect state.
+      </Paragraph>,
+      <Paragraph>
+        On the lines<CodeWrap>13-20</CodeWrap>, we first check if it's a special case of the
+        <CodeWrap>useEffect</CodeWrap>hook (empty dependency array) and call its callback function 
+        right away. Otherwise, we compare the previous and new dependency values and call the callback if they're
+        not the same.
+      </Paragraph>,
+    ],
+
+
+    <Fragment>
+      And that's it for the hooks! You can check the updated version of the<CodeWrap>Todo</CodeWrap>
+      here: 
     </Fragment>
   ]
 ]

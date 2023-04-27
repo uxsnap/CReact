@@ -1,6 +1,14 @@
 import { Fragment, createElement } from "../../main/render";
 import { Title, Paragraph, CodeBlock, CodeWrap, SandboxFrame, List } from "../components";
-import { HOOKS_1, HOOKS_2, RENDER_COMPONENT_3, RECONCILE_10, TODO_1 } from "../code";
+import { 
+  HOOKS_1, 
+  HOOKS_2, 
+  RENDER_COMPONENT_3, 
+  RECONCILE_10, 
+  TODO_1, 
+  RECONCILE_11, 
+  HOOKS_3
+} from "../code";
 
 export const Hooks = ({ lang }) => (
   <Fragment>
@@ -22,7 +30,9 @@ export const Hooks = ({ lang }) => (
     
     <Paragraph>{lang[6]}</Paragraph>
 
-    <CodeBlock code={RECONCILE_10} fileName="main/reconcile.js" line="9,14-16,18-22,26"/>
+    <CodeBlock code={RECONCILE_10} fileName="main/reconcile.js" line="9,14,15-21,23"/>
+
+    <CodeBlock code={RECONCILE_11} fileName="main/reconcile.js" line="6-8"/>
     
     <List items={lang[7]}/>
 
@@ -36,34 +46,18 @@ export const Hooks = ({ lang }) => (
 
     <Paragraph>{lang[11]}</Paragraph>
 
-    <CodeBlock code={HOOKS_2} fileName="main/hooks.js" />
-    {/* 
+    <CodeBlock code={HOOKS_2} fileName="main/hooks.js" line="14-18,20-22,27-33"/>
 
-    <SandboxFrame n={6} />
+    <List items={lang[12]}/>
 
-    <Paragraph>{lang[6]}</Paragraph>
+    <Paragraph>{lang[13]}</Paragraph>
 
-    <CodeBlock code={CREATE_REF_1} fileName="main/ref.js" />
+    <CodeBlock code={HOOKS_3} fileName="main/hooks.js" line="2-11,13-20,22"/>
 
-    <Paragraph>{lang[7]}</Paragraph>
+    <List items={lang[14]}/>
 
-    <CodeBlock code={SET_PROP_5} fileName="main/render.js" line="7-9"/>
+    <Paragraph>{lang[15]}</Paragraph>
 
-    <Paragraph>{lang[8]}</Paragraph>
-
-    <CodeBlock code={RENDER_4} fileName="main/render.js" line="10,19-21"/>
-    <CodeBlock code={RECONCILE_9} fileName="main/reconcile.js" line="39-41,52-62,64-69"/>
-
-    <List items={lang[9]}/>
-
-    <Paragraph>{lang[10]}</Paragraph>
-
-    <CodeBlock code={SET_EVENT_LISTENER_1} fileName="main/render.js"/>
-
-    <Paragraph>{lang[11]}</Paragraph>
-
-    <SandboxFrame n={7} />
-
-    <Paragraph>{lang[12]}</Paragraph> */}
+    <SandboxFrame n={8} />
   </Fragment>
 );

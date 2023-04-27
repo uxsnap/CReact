@@ -145,10 +145,7 @@ export const reconcileComponent = (vdom, dom, parent) => {
 };
 
 export const reconcileFunctionComponent = (vdom, dom, parent, newProps) => {
-  if (
-    dom.__funcInstance &&
-    dom.__funcInstance.type.prototype.constructor === vdom.type.prototype.constructor
-    ) {
+  if (dom.__funcInstance && dom.__funcInstance.type === vdom.type) {
     currentlyRenderingComponent.stateHookIndex = 0;
     currentlyRenderingComponent.effectHookIndex = 0;
     currentlyRenderingComponent.current = dom.__token;

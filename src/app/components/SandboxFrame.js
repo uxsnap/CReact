@@ -29,6 +29,10 @@ const LINKS = [
   {
     src: "https://codesandbox.io/embed/props-3-y14vdb?fontsize=14&hidenavigation=1&theme=dark",
     title: "props_3"
+  },
+  {
+    src: "https://codesandbox.io/embed/hooks-h6iphk?fontsize=14&hidenavigation=1&theme=dark",
+    title: "hooks" 
   }
 ];
 
