@@ -1,7 +1,6 @@
 import { Fragment, createElement } from "../../main/render";
 import { CodeWrap, Paragraph } from "../components";
-
-const INSPIRED_BY = "https://stackoverflow.com/questions/53974865/how-do-react-hooks-determine-the-component-that-they-are-for/53980190#53980190";
+import { INSPIRED_BY } from '../utils';
 
 export default [
   [
@@ -576,7 +575,6 @@ export default [
         not the same.
       </Paragraph>,
     ],
-
 
     <Fragment>
       And that's it for the hooks! You can check the updated version of the<CodeWrap>Todo</CodeWrap>

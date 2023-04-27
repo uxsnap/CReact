@@ -1,5 +1,6 @@
 import { Fragment, createElement } from "../../main/render";
 import { CodeWrap, Paragraph } from "../components";
+import { INSPIRED_BY } from '../utils';
 
 export default [
   [
@@ -419,5 +420,131 @@ export default [
 
     "Теперь наш код поддерживает конкретные свойства, и Todo работает как ожидается."
   ],
-  []
+  [
+    "Хуки",
+
+    <Fragment>
+      В этой главе мы добавим поддержку<CodeWrap>хуков</CodeWrap>и<CodeWrap>состояния</CodeWrap>в<CodeWrap>Функциональные</CodeWrap>компоненты. Тем не менее, хотя основная концепция<CodeWrap>хуков</CodeWrap>кажется отличной от<CodeWrap>классовых</CodeWrap>компонентов, между ними много сходств. Содержание этой главы вдохновлено этим <a style={{ marginLeft: '5px' }} target="_blank" href={INSPIRED_BY}>постом</a>.
+    </Fragment>,
+
+    <Fragment>
+      Во-первых, добавим файл, где будут реализованы хуки.
+    </Fragment>,
+
+    <Fragment>
+      Объект<CodeWrap>INSTANCE_MAP</CodeWrap>содержит все<CodeWrap>состояния</CodeWrap>и<CodeWrap>эффекты</CodeWrap>компонентов. Объект<CodeWrap>currentlyRenderingComponent</CodeWrap>- это вспомогательный объект, который поможет нам определить, какой<CodeWrap>useState</CodeWrap>или<CodeWrap>useEffect</CodeWrap>нужно вызвать в данный момент. Он также содержит<CodeWrap>токен</CodeWrap>текущего обрабатываемого компонента.
+    </Fragment>,
+
+    <Fragment>
+      Наш следующий шаг - обновить функцию<CodeWrap>renderComponent</CodeWrap>, чтобы обрабатывать<CodeWrap>Функциональные</CodeWrap>компоненты с хуками.   
+    </Fragment>,
+
+    [
+      <Paragraph>
+        На строке<CodeWrap>17</CodeWrap>мы создаем токен для текущего компонента.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>19-21</CodeWrap>мы обновляем<CodeWrap>currentlyRenderingComponent</CodeWrap>
+        с<CodeWrap>token</CodeWrap>и инициализируем индексы.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>64-69</CodeWrap>мы удаляем потомков из DOM.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>23-28</CodeWrap>мы проверяем, есть ли у нас уже необходимая запись,
+        и создаем новую, если ее нет.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>34-39</CodeWrap>мы назначаем специальные поля, как и в<CodeWrap>классовых</CodeWrap>компонентах.
+      </Paragraph>
+    ],
+
+    <Fragment>
+      Далее мы обновляем функцию<CodeWrap>reconcile</CodeWrap>, чтобы обрабатывать состояния
+      функциональных компонентов.
+    </Fragment>,
+
+    [
+      <Paragraph>
+        На строке<CodeWrap>9</CodeWrap>мы вызываем новую функцию вместо обычного рендеринга
+        <CodeWrap>Functional</CodeWrap>компонента.
+      </Paragraph>,
+      <Paragraph>
+        На строке<CodeWrap>14</CodeWrap>мы проверяем, является ли компонент тем же, также как мы делали
+        с<CodeWrap>классовыми</CodeWrap>компонентами. Если это не так, мы заменяем старый компонент на новый на
+        строке<CodeWrap>23</CodeWrap>.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>15-21</CodeWrap>мы повторно инициализируем индексы и присваиваем токен нашего текущего компонента
+        для согласования к полю<CodeWrap>current</CodeWrap>. Прямо перед согласованием мы обновляем
+        свойства нашего компонента на строке<CodeWrap>22</CodeWrap>.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>6-8</CodeWrap>во время этапа согласования дочерних элементов мы удаляем состояние
+        удаленного компонента из<CodeWrap>INSTANCE_MAP</CodeWrap>.
+      </Paragraph>,
+    ],
+
+    <Fragment>
+      Прежде чем мы погрузимся в реализацию хуков, нужно объяснить, как они работают и почему мы
+      должны постоянно обновлять поля<CodeWrap>currentlyRenderingComponent</CodeWrap>. 
+    </Fragment>,
+
+    <Fragment>
+      Давайте посмотрим на обновленный компонент<CodeWrap>Todo</CodeWrap>:
+    </Fragment>,
+
+    <Fragment>
+      Сначала компонент обрабатывается функцией<CodeWrap>render</CodeWrap>.
+      Обновляются все необходимые поля,
+      и вызывается функция компонента. 
+      Когда функция выполняет свой код, она вызывает<CodeWrap>useState</CodeWrap>.
+    </Fragment>,
+
+    <Fragment>
+      Затем, внутри<CodeWrap>useState</CodeWrap>, мы получаем компонент, который в данный момент рендерится, 
+      используя<CodeWrap>currentlyRenderingComponent</CodeWrap>. Вот код:
+    </Fragment>,
+
+    [
+      <Paragraph>
+        На строках<CodeWrap>14-18</CodeWrap>, мы присваиваем дефолтное значение
+        хуку, если он пустой.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>20-22</CodeWrap>, мы получаем текущий объект<CodeWrap>state</CodeWrap>хука,
+        и увеличиваем<CodeWrap>stateHookIndex</CodeWrap>, так что следующий хук компонента получит свое состояние.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>27-33</CodeWrap>, мы получаем<CodeWrap>instance</CodeWrap>компонента
+        и<CodeWrap>DOM</CodeWrap>-элемент, затем обновляем<CodeWrap>state</CodeWrap>компонента
+        и обновляем его с новым состоянием.
+      </Paragraph>,
+    ],
+
+    <Fragment>
+      Это весь код для<CodeWrap>useState</CodeWrap>. Давайте теперь реализуем<CodeWrap>useEffect</CodeWrap>.
+    </Fragment>,
+
+    [
+      <Paragraph>
+        На строках<CodeWrap>2-11</CodeWrap>мы снова получаем состояние текущего хука, 
+        но теперь из другого объекта,<CodeWrap>__effects</CodeWrap>.
+      </Paragraph>,
+      <Paragraph>
+        На строке<CodeWrap>22</CodeWrap>мы увеличиваем<CodeWrap>effectHookIndex</CodeWrap>, 
+        чтобы следующий хук компонента получил свое состояние эффекта.
+      </Paragraph>,
+      <Paragraph>
+        На строках<CodeWrap>13-20</CodeWrap>мы сначала проверяем, является ли это специальным случаем хука 
+        <CodeWrap>useEffect</CodeWrap> (пустой массив зависимостей) и сразу вызываем его callback. 
+        В ином случае мы сравниваем предыдущее и новое значения зависимостей и вызываем callback, 
+        если они отличаются.
+      </Paragraph>,
+    ],
+
+    <Fragment>
+      Вот и все для хуков! Вы можете проверить обновленную версию<CodeWrap>Todo</CodeWrap> здесь:
+    </Fragment>
+  ]
 ]
