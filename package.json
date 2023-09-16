@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
-    "prismjs": "^1.29.0"
+    "prismjs": "^1.29.0",
+    "requestidlecallback": "^0.3.0"
   }
 }

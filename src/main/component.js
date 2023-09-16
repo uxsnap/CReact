@@ -1,4 +1,5 @@
 import { reconcile } from "./reconcile";
+import 'requestidlecallback';
 
 export class Component {
   constructor(props) {
