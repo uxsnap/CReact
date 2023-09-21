@@ -569,7 +569,7 @@ export default [
         the next hook of the component will get its effect state.
       </Paragraph>,
       <Paragraph>
-        On the lines<CodeWrap>13-20</CodeWrap>, we first check if it's a special case of the
+        On the lines<CodeWrap>13-21</CodeWrap>, we first check if it's a special case of the
         <CodeWrap>useEffect</CodeWrap>hook (empty dependency array) and call its callback function 
         right away. Otherwise, we compare the previous and new dependency values and call the callback if they're
         not the same.

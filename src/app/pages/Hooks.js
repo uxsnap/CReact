@@ -52,7 +52,7 @@ export const Hooks = ({ lang }) => (
 
     <Paragraph>{lang[13]}</Paragraph>
 
-    <CodeBlock code={HOOKS_3} fileName="main/hooks.js" line="2-11,13-20,22"/>
+    <CodeBlock code={HOOKS_3} fileName="main/hooks.js" line="2-11,13-21"/>
 
     <List items={lang[14]}/>
 

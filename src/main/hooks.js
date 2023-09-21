@@ -44,14 +44,16 @@ export function useEffect(func, depArray) {
   if (component.__effects[currentlyRenderingComponent.effectHookIndex] === undefined) {
     component.__effects[currentlyRenderingComponent.effectHookIndex] = {
       func,
-      depArray
+      depArray,
+      called: false,
     }
   }
 
   let effectsObj = component.__effects[currentlyRenderingComponent.effectHookIndex];
 
-  if (!effectsObj.depArray.length) {
+  if (!effectsObj.depArray.length && !effectsObj.called) {
     effectsObj.func();
+    effectsObj.called = true;
   } else if (!__SHALLOW_COMPARE(effectsObj.depArray, depArray)) {
     effectsObj.func = func;
     effectsObj.depArray = depArray;

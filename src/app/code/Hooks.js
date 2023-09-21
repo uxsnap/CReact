@@ -1,4 +1,4 @@
-import { escapeHtml } from '../utils';
+import { escapeHtml } from "../utils";
 
 export const HOOKS_1 = `export const INSTANCE_MAP = new Map();
 
@@ -77,7 +77,7 @@ export const reconcileFunctionComponent = (vdom, dom, parent, newProps) => {
   } else {
     return replace(parent)(dom, render(vdom, parent));
   }
-};`
+};`;
 
 export const TODO_1 = escapeHtml(`export const Todo = () => {
   const [items, setItems] = useState([{ name: 'test', id: 0 }]);
@@ -163,7 +163,7 @@ export const RECONCILE_11 = `for (let key in curChildNodes) {
 
   curChildNodes[key].remove();
 }
-`
+`;
 
 export const HOOKS_3 = `export function useEffect(func, depArray) {
   const component = getComponent();
@@ -177,8 +177,9 @@ export const HOOKS_3 = `export function useEffect(func, depArray) {
 
   let effectsObj = component.__effects[currentlyRenderingComponent.effectHookIndex];
 
-  if (!effectsObj.depArray.length) {
+  if (!effectsObj.depArray.length && !effectsObj.called) {
     effectsObj.func();
+    effectsObj.called = true;
   } else if (!__SHALLOW_COMPARE(effectsObj.depArray, depArray)) {
     effectsObj.func = func;
     effectsObj.depArray = depArray;
@@ -187,4 +188,4 @@ export const HOOKS_3 = `export function useEffect(func, depArray) {
   }
 
   currentlyRenderingComponent.effectHookIndex++;
-}`
+}`;
